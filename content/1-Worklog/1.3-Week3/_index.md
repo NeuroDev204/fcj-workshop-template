@@ -1,57 +1,41 @@
 ---
 title: "Week 3 Worklog"
-date: 2024-01-01
+date: 2026-07-05
 weight: 1
 chapter: false
 pre: " <b> 1.3. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
+
 
 
 ### Week 3 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Learn hybrid DNS integration between an on-premises network and Amazon VPC with Amazon Route 53.
+* Learn server and database migration strategies (VM Import/Export, DMS, SCT).
+* Learn to design a backup and hybrid file storage strategy with AWS Backup and Storage Gateway.
+* Get introduced to Amazon CloudFront and attend an AWS event.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Day | Task                                                                                                                                                                                                     | Start Date | Completion Date | Reference Material |
+| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------------- | ------------------- |
+| 2   | - Set up an integrated hybrid DNS system between a local network and Amazon VPC with Amazon Route 53                                                                                                       | 04/05/2026 | 04/05/2026      |        https://000010.awsstudygroup.com/              |
+| 3   | - Migrate virtual servers with AWS VM Import/Export <br> - Perform database migration with AWS Database Migration Service (DMS) and the Schema Conversion Tool (SCT)                                      | 05/05/2026 | 05/05/2026      |         https://cloudjourney.awsstudygroup.com/2-migrate/            |
+| 4   | - Implement a system backup plan with AWS Backup                                                                                                                                                            | 06/05/2026 | 06/05/2026      |     https://000013.awsstudygroup.com/                 |
+| 5   | - Use AWS Storage Gateway (File Gateway) <br> - Learn Amazon CloudFront                                                                                                                                     | 07/05/2026 | 07/05/2026      |                      |
+| 7   | - Attend an AWS event                                                                                                                                                                                       | 09/05/2026 | 09/05/2026      |                      |
 
 
 ### Week 3 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Set up a hybrid DNS integration between an on-premises network and Amazon VPC using Amazon Route 53.
+* Migrated virtual servers with AWS VM Import/Export and performed a cross-environment database migration with AWS DMS and the Schema Conversion Tool (SCT).
+* Implemented a system backup plan using AWS Backup.
+* Learned to use AWS Storage Gateway (File Gateway) for hybrid file storage, and got introduced to Amazon CloudFront for content delivery.
+* Attended an official AWS event to expand networking and practical knowledge.
 
-* Successfully created and configured an AWS Free Tier account.
+**Challenges & Solutions:**
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
+* **Challenge:** Forgot to delete unused EBS volumes after testing the Storage Gateway lab, resulting in a small unexpected charge (~$2.1).
+* **Solution:** Deleted all the unused volumes and made a habit of cleaning up test resources right after use.
 
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+**AWS services learned this week:** Amazon Route 53, AWS VM Import/Export, AWS Database Migration Service (DMS), AWS Schema Conversion Tool (SCT), AWS Backup, AWS Storage Gateway, Amazon CloudFront.

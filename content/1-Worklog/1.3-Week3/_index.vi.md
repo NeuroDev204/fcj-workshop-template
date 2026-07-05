@@ -1,59 +1,42 @@
 ---
 title: "Worklog Tuần 3"
-date: 2024-01-01
+date: 2026-07-05
 weight: 1
 chapter: false
 pre: " <b> 1.3. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
 
 ### Mục tiêu tuần 3:
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Tìm hiểu tích hợp hybrid DNS giữa mạng nội bộ và Amazon VPC bằng Amazon Route 53.
+* Tìm hiểu chiến lược di chuyển server và database (VM Import/Export, DMS, SCT).
+* Học cách thiết kế chiến lược backup và lưu trữ file hybrid với AWS Backup và Storage Gateway.
+* Làm quen với Amazon CloudFront và tham gia một sự kiện AWS.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Thứ | Công việc                                                                                                                                                                       | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | -------------- |
+| 2   | - Thiết lập hệ thống hybrid DNS tích hợp giữa mạng nội bộ và Amazon VPC bằng Amazon Route 53                                                                                     | 04/05/2026   | 04/05/2026      | https://000010.awsstudygroup.com/ |
+| 3   | - Di chuyển virtual server bằng AWS VM Import/Export <br> - Thực hiện di chuyển database bằng AWS Database Migration Service (DMS) và Schema Conversion Tool (SCT)              | 05/05/2026   | 05/05/2026      | https://cloudjourney.awsstudygroup.com/2-migrate/ |
+| 4   | - Triển khai kế hoạch backup hệ thống với AWS Backup                                                                                                                             | 06/05/2026   | 06/05/2026      | https://000013.awsstudygroup.com/ |
+| 5   | - Sử dụng AWS Storage Gateway (File Gateway) <br> - Tìm hiểu Amazon CloudFront                                                                                                   | 07/05/2026   | 07/05/2026      |                 |
+| 7   | - Tham gia sự kiện AWS                                                                                                                                                            | 09/05/2026   | 09/05/2026      |                 |
 
 
 ### Kết quả đạt được tuần 3:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Thiết lập tích hợp hybrid DNS giữa mạng nội bộ và Amazon VPC bằng Amazon Route 53.
+* Di chuyển virtual server bằng AWS VM Import/Export và thực hiện di chuyển database liên môi trường bằng AWS DMS và Schema Conversion Tool (SCT).
+* Triển khai kế hoạch backup hệ thống với AWS Backup.
+* Học cách sử dụng AWS Storage Gateway (File Gateway) cho lưu trữ file hybrid, và làm quen với Amazon CloudFront cho việc phân phối nội dung.
+* Tham gia một sự kiện AWS chính thức để mở rộng networking và kiến thức thực tế.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+**Khó khăn & Giải pháp:**
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
+* **Khó khăn:** Quên xóa các EBS volume không dùng sau khi thực hành Storage Gateway, dẫn đến phát sinh chi phí ngoài dự kiến (~2.1$).
+* **Giải pháp:** Xóa toàn bộ volume không dùng và tạo thói quen dọn dẹp tài nguyên thử nghiệm ngay sau khi sử dụng.
 
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
+**Dịch vụ AWS đã học trong tuần:** Amazon Route 53, AWS VM Import/Export, AWS Database Migration Service (DMS), AWS Schema Conversion Tool (SCT), AWS Backup, AWS Storage Gateway, Amazon CloudFront.
 
 
