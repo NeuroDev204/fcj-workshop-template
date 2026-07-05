@@ -5,55 +5,32 @@ weight: 2
 chapter: false
 pre: " <b> 1.11. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+
 
 
 ### Mục tiêu tuần 11:
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Triển khai authentication, SSL và messaging (SQS/SNS) cho ứng dụng serverless.
+* Tự động hoá CI/CD và bổ sung khả năng giám sát (CloudWatch & X-Ray) cho ứng dụng serverless.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Thứ | Công việc                                                                       | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
+| --- | -------------------------------------------------------------------------------- | ------------ | --------------- | -------------- |
+| 2   | - Serverless: authentication với Amazon Cognito                                   | 29/06/2026   | 29/06/2026      |  https://000081.awsstudygroup.com/                |
+| 3   | - Serverless: thiết lập SSL cho ứng dụng serverless                               | 30/06/2026   | 30/06/2026      |   https://000082.awsstudygroup.com/              |
+| 4   | - Serverless: xử lý đơn hàng bằng Amazon SQS và SNS                                | 01/07/2026   | 01/07/2026      |    https://000083.awsstudygroup.com/             |
+| 5   | - Serverless: CI/CD bằng AWS CodePipeline                                          | 02/07/2026   | 02/07/2026      |    https://000084.awsstudygroup.com/             |
+| 6   | - Serverless: giám sát ứng dụng bằng Amazon CloudWatch và AWS X-Ray                | 03/07/2026   | 03/07/2026      |    https://000085.awsstudygroup.com/             |
 
 
 ### Kết quả đạt được tuần 11:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Triển khai authentication cho ứng dụng serverless bằng Amazon Cognito.
+* Thiết lập SSL/TLS cho ứng dụng serverless.
+* Xây dựng workflow xử lý đơn hàng bằng Amazon SQS và SNS.
+* Tự động hoá CI/CD cho ứng dụng serverless bằng AWS CodePipeline.
+* Giám sát ứng dụng serverless bằng Amazon CloudWatch và AWS X-Ray.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
+**Dịch vụ AWS đã học trong tuần:** AWS SAM, Amazon Cognito, Amazon SQS, Amazon SNS, AWS CodePipeline, Amazon CloudWatch, AWS X-Ray.
 
 
