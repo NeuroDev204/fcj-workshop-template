@@ -5,55 +5,35 @@ weight: 1
 chapter: false
 pre: " <b> 1.8. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
 
 ### Mục tiêu tuần 8:
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Tìm hiểu tối ưu chi phí EC2 thông qua right-sizing.
+* Học cách trực quan hoá và phân tích chi phí sử dụng AWS bằng Cost Explorer, AWS Glue và Amazon Athena.
+* Tìm hiểu chiến lược migrate từ monolith sang microservices.
+* Học cách tự động hoá quy trình release ứng dụng.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Thứ | Công việc                                                                                                                        | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | -------------- |
+| 2   | - Chọn kích thước phù hợp cho Amazon EC2 để tối ưu tài nguyên                                                                       | 08/06/2026   | 08/06/2026      |       https://000032.awsstudygroup.com/          |
+| 3   | - Trực quan hoá chi phí sử dụng trên AWS                                                                                            | 09/06/2026   | 09/06/2026      | https://000034.awsstudygroup.com/                |
+| 4   | - Phân tích chi phí sử dụng nâng cao bằng AWS Glue và Amazon Athena                                                                 | 10/06/2026   | 10/06/2026      |    https://000040.awsstudygroup.com/              |
+| 5   | - Tìm hiểu việc migrate ứng dụng monolith                                                                                           | 11/06/2026   | 11/06/2026      |   https://000050.awsstudygroup.com/               |
+| 6   | - Tìm hiểu tự động release ứng dụng <br> - Tái cấu trúc dữ liệu và workflow cho kiến trúc microservices                             | 12/06/2026   | 12/06/2026      |     https://000051.awsstudygroup.com/            |
+| 7   | - Tạo một microservice                                                                                                               | 13/06/2026   | 13/06/2026      |     https://000052.awsstudygroup.com/            |
 
 
 ### Kết quả đạt được tuần 8:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Học cách right-size tài nguyên Amazon EC2 để tối ưu chi phí.
+* Học cách trực quan hoá chi phí sử dụng AWS.
+* Thực hiện phân tích chi phí/sử dụng nâng cao bằng AWS Glue và Amazon Athena.
+* Tìm hiểu việc migrate kiến trúc ứng dụng monolith.
+* Học cách tự động hoá quy trình release ứng dụng.
+* Tái cấu trúc dữ liệu và workflow cho kiến trúc microservices, và tạo một microservice.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
-
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
+**Dịch vụ AWS đã học trong tuần:** Amazon EC2 (Resource Optimization), AWS Cost Explorer & Cost Optimization, AWS Glue, Amazon Athena, Docker (Microservices).
 
 
