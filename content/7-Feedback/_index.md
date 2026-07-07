@@ -6,10 +6,6 @@ chapter: false
 pre: " <b> 7. </b> "
 ---
 
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
-
 > Here, you can freely share your personal opinions about your experience participating in the First Cloud AI Journey program. This will help the FCAJ team improve any shortcomings based on the following aspects:
 
 ### Overall Evaluation
@@ -35,13 +31,18 @@ The company provides an internship allowance and offers flexible working hours w
 ---
 
 ### Additional Questions
-- What did you find **most satisfying** during your internship?  
-- What do you think the company **should improve** for future interns?  
-- If recommending to a friend, would you **suggest they intern here**? Why or why not?  
+**What did you find most satisfying during your internship?**  
+What I found most satisfying was getting to build and operate a real CI/CD pipeline (AWS CodePipeline, CodeBuild, CloudFormation/SAM) for a complete serverless project, instead of just studying the theory. Seeing the pipeline automatically build, test, and deploy successfully, and the admin monitoring page display real CloudWatch data correctly, was the most memorable part of the past 12 weeks.
+
+**What do you think the company should improve for future interns?**  
+I think the program could add more cross-team architecture/code review sessions so interns can learn from each other's approaches, along with more sample checklists on IAM and security best practices for teams sharing a single AWS account.
+
+**If recommending to a friend, would you suggest they intern here? Why or why not?**  
+Yes, I would recommend it. The program gives hands-on experience with real AWS services (not simulated labs), close mentor support, and a capstone product (PeriodIQ) that is actually deployed to production - a great addition to a personal portfolio.
 
 ---
 
 ### Suggestions & Expectations
-- Do you have any suggestions to improve the internship experience?  
-- Would you like to continue this program in the future?  
-- Any other comments (free sharing):
+- Organize 1-2 cross-team demo sessions so everyone can learn from each other's final projects, plus a joint retrospective at the end of the program.
+- I would like to continue with more advanced AWS programs in the future (e.g. multi-account architecture, security, or AI/ML services) if the opportunity arises.
+- Thank you to the FCAJ team and mentors for the support throughout the internship, especially during the build and deployment of the PeriodIQ project. This has been the most valuable internship experience I've had.

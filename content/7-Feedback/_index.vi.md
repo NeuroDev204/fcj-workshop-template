@@ -5,10 +5,6 @@ weight: 7
 chapter: false
 pre: " <b> 7. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
-
 >Tại đây bạn có thể tự do đóng góp ý kiến cá nhân về những trải nghiệm khi tham gia chương trình First Cloud AI Journey, giúp team FCAJ cải thiện những vấn đề còn thiếu sót dựa trên các hạng mục sau:
 
 ### Đánh giá chung
@@ -33,12 +29,17 @@ Công ty có hỗ trợ phụ cấp thực tập và tạo điều kiện về t
 
 
 ### Một số câu hỏi khác
-- Điều bạn **hài lòng nhất** trong thời gian thực tập?  
-- Điều bạn nghĩ công ty **cần cải thiện** cho các thực tập sinh sau?  
-- Nếu giới thiệu cho bạn bè, bạn có **khuyên họ thực tập ở đây không**? Vì sao?  
+**Điều bạn hài lòng nhất trong thời gian thực tập?**  
+Điều mình hài lòng nhất là được tự tay triển khai và vận hành một pipeline CI/CD thật (AWS CodePipeline, CodeBuild, CloudFormation/SAM) cho một dự án serverless hoàn chỉnh, thay vì chỉ học lý thuyết suông. Cảm giác thấy pipeline tự động build - test - deploy chạy thành công, và trang admin monitoring hiển thị đúng dữ liệu CloudWatch thật, là trải nghiệm đáng nhớ nhất trong 12 tuần vừa qua.
+
+**Điều bạn nghĩ công ty cần cải thiện cho các thực tập sinh sau?**  
+Mình nghĩ chương trình có thể bổ sung thêm các buổi review kiến trúc/code chéo giữa các nhóm nhỏ để mọi người học hỏi cách tiếp cận khác nhau, cũng như có thêm tài liệu/checklist mẫu về best practice IAM và bảo mật khi nhiều người cùng dùng chung một tài khoản AWS.
+
+**Nếu giới thiệu cho bạn bè, bạn có khuyên họ thực tập ở đây không? Vì sao?**  
+Có, mình sẵn sàng giới thiệu. Chương trình cho cơ hội làm việc với dịch vụ AWS thật (không phải bài lab mô phỏng), có mentor hỗ trợ sát sao, và một sản phẩm cuối kỳ (PeriodIQ) đã triển khai production thật để đưa vào portfolio cá nhân.
 
 
 ### Đề xuất & mong muốn
-- Bạn có đề xuất gì để cải thiện trải nghiệm trong kỳ thực tập?  
-- Bạn có muốn tiếp tục chương trình này trong tương lai?
-- Góp ý khác (tự do chia sẻ):
+- Tổ chức thêm 1-2 buổi demo chéo giữa các nhóm/dự án cuối kỳ để mọi người học hỏi lẫn nhau, và một buổi retrospective chung sau khi kết thúc chương trình.
+- Mình mong muốn được tiếp tục tham gia các chương trình nâng cao hơn của AWS (ví dụ về kiến trúc multi-account, bảo mật, hoặc các dịch vụ AI/ML) nếu có cơ hội.
+- Cảm ơn team FCAJ và mentor đã đồng hành trong suốt quá trình thực tập, đặc biệt là giai đoạn xây dựng và triển khai project PeriodIQ. Đây là trải nghiệm thực tập giá trị nhất mình từng có.
