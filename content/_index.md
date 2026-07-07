@@ -10,17 +10,17 @@ chapter: false
 
 
 ### Student Information:
-&emsp; **Full Name:** Chuong Tu Luan
+&emsp; **Full Name:** Pham Van Sy
 
-&emsp; **Phone Number:** 0938533520 
+&emsp; **Phone Number:** 0978275054
 
-&emsp; **Email:** luanchuong51@gmail.com
+&emsp; **Email:** phamvansy204@gmail.com
 
 &emsp; **University:** Ho Chi Minh City University of Technology
 
 &emsp; **Major:** Information Technology
 
-&emsp; **Class:** 22DTHC4
+&emsp; **Class:** 22DTHD5
 
 &emsp; **Internship Company:** Amazon Web Services Viet Nam Company Limited
 

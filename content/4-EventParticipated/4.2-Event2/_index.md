@@ -7,19 +7,20 @@ pre: " <b> 4.2. </b> "
 ---
 
 
-# Summary Report: “FCAJ Community Day”
+# Summary Report: "FCAJ Community Day"
 
 **Date & Time:** 09:00, May 23, 2026
+
 ### Event Objectives
 
-- Bring together AWS community builders, engineers, and students to share hands-on experience across AI, cloud architecture, and modern application delivery
-- Explore the practical side of building with LLMs — from reliability quirks to context engineering
-- Showcase real production and hackathon case studies from community members
-- Deep-dive into Amazon CloudFront as a foundation for cost, security, and performance at the edge
+- Pull together AWS community builders, working engineers, and students to trade hands-on experience across AI, cloud architecture, and how modern applications actually get shipped
+- Get into the practical, sometimes uncomfortable side of building with LLMs - from their reliability quirks to the discipline of context engineering
+- Put real production and hackathon case studies from community members on stage, not just polished marketing examples
+- Take a close look at Amazon CloudFront as a foundation for cost predictability, security, and edge performance
 
 ### Speakers
 
-- **Duc Dao** – Solution Architect, Cloud Kinetics — *Non-Determinism of “Deterministic” LLM Settings*
+- **Duc Dao** – Solution Architect, Cloud Kinetics — *Non-Determinism of "Deterministic" LLM Settings*
 - **Vy Lam** – Senior Business Systems Analyst, VPBank — *Enterprise-Grade Multi-Agent System: The Case of Startup Credit Scoring*
 - **Pham Ng Hai Anh** – AWS Community Builder, G-AsiaPacific Vietnam — *Friendly AI Assistant w/ Amazon Quick*
 - **Nguyen Tuan Thinh** – DevOps Engineer, First Cloud AI Journey — *From Edge to Origin: CloudFront as Your Foundation*
@@ -28,96 +29,75 @@ pre: " <b> 4.2. </b> "
 
 ### Key Highlights
 
-#### Non-Determinism of “Deterministic” LLM Settings
+#### Non-Determinism of "Deterministic" LLM Settings
 
-- `temperature=0` is assumed to guarantee reproducible outputs, but research (Atil et al., 2024) found **zero models delivered consistent outputs** across all tested tasks — accuracy varied up to 15%, and best-to-worst accuracy gaps reached 70%
-- Root cause: **non-associative floating-point arithmetic on GPUs** plus **inference batching**, where your request's computation depends on what else is in the batch
-- Mitigation strategies: multiple runs + majority voting, structured/constrained outputs, self-hosted models for full control, and designing downstream logic to treat LLM output as **probabilistic, not deterministic**
-- Practical tip: `temp=0.1` is often a safer sweet spot than `temp=0` to avoid the model getting stuck in repetitive loops
+Duc Dao opened with a finding that quietly undermines something most of us take for granted: setting `temperature=0` is supposed to guarantee the same output every time, but research from Atil et al. (2024) found that **not a single model tested actually produced consistent output** across every task. Accuracy swung by as much as 15%, and the gap between the best and worst runs reached 70% - numbers that are hard to square with the word "deterministic."
+
+The root cause turned out to be more mundane than a model quirk: **floating-point arithmetic on GPUs isn't associative**, and inference requests get processed in **batches**, so the exact result for your request quietly depends on whatever else happens to be sitting in the same batch at that moment. Duc's suggested mitigations were pragmatic rather than exotic - running the same request multiple times and taking a majority vote, constraining outputs to a structured format, self-hosting a model when you need full control over the inference stack, and, maybe most importantly, designing all downstream logic to treat LLM output as **probabilistic rather than deterministic** by default. One small but useful tip he shared: `temp=0.1` is often a safer choice than a hard `temp=0`, since it avoids the model getting stuck cycling through repetitive loops.
 
 #### Enterprise-Grade Multi-Agent System — Startup Credit Scoring
 
-- Traditional credit scoring models fail on startups because they're built around 3+ years of financials and standardized reporting — not 6-18 months of hypergrowth and unstructured data
-- A **single agent** struggles with multi-domain expertise, conflicting objectives, and auditability — it works, but produces unreliable output for high-stakes decisions
-- The proposed **virtual credit committee**: specialized agents (Financial, Market, Team, Risk, Compliance) collaborate under a Manager agent to produce a consensus score, risk rating, confidence level, and full audit trail
-- Enterprise-grade thinking spans six pillars: **security, data governance, network, operations, human factors, and compliance** — measured ROI showed 95% faster processing and 200–300% 3-year ROI
+Vy Lam's talk started from a mismatch that's easy to miss until you're staring right at it: traditional credit-scoring models are built around three-plus years of financial history and standardized reporting, which is exactly what a startup doesn't have - instead you get 6 to 18 months of hypergrowth and messy, unstructured data.
+
+A single AI agent, she argued, buckles under that kind of problem - it's asked to hold multi-domain expertise, juggle conflicting objectives, and stay auditable all at once, and while it technically "works," the output isn't reliable enough for a decision with real financial stakes. Her proposed alternative was a **virtual credit committee**: a set of specialized agents (Financial, Market, Team, Risk, Compliance) that collaborate under a Manager agent to arrive at a consensus score, a risk rating, a confidence level, and a full audit trail behind every decision. She framed enterprise-grade thinking as resting on six pillars - **security, data governance, network, operations, human factors, and compliance** - and backed it with numbers: 95% faster processing and a measured 200-300% three-year ROI.
 
 #### Friendly AI Assistant with Amazon Quick
 
-- Business users face repetitive, time-consuming tasks that require pulling and analyzing information across multiple sources
-- **Amazon Quick Suite** provides a unified, secure experience combining company data, world knowledge, 40+ data connectors, and agentic capabilities (automation flows, dashboards, chat, research) under one governed layer with guardrails and access controls
-- Demoed use case: a PM assistant that automatically creates meeting minutes, emails stakeholders, and schedules follow-ups
+Pham Ng Hai Anh's session zeroed in on a familiar frustration for business users: a lot of their day is eaten by repetitive tasks that require pulling and cross-referencing information scattered across multiple systems.
+
+His pitch for **Amazon Quick Suite** was that it collapses this into one governed, secure layer - combining company data, general world knowledge, more than 40 data connectors, and agentic capabilities (automation flows, dashboards, chat, research) behind a single set of guardrails and access controls, rather than stitching together a pile of disconnected tools. The demo that landed best was a PM assistant that automatically drafted meeting minutes, emailed the relevant stakeholders, and scheduled the follow-up meeting on its own.
 
 #### From Edge to Origin: CloudFront as Your Foundation
 
-- Usage-based CDN billing is hard to forecast — a bill can range from $0.03 to a $100K spike from viral traffic or attacks
-- New **fixed-price CDN + security plans** (launching Nov 2025) bundle CloudFront, WAF, DDoS protection, Route 53, and CloudWatch logging into one predictable monthly price
-- CloudFront materially improves **cost** (compression, free AWS-origin data transfer), **security** (TLS 1.3/mTLS, Origin Shield/OAC/VPC origins to cloak origins, signed URLs), **resiliency** (multi-layer caching, origin failover, graceful degradation), and **performance** (HTTP/3, persistent backbone connections, edge compute)
+Nguyen Tuan Thinh's talk started with a problem anyone who's run a public-facing service has felt: usage-based CDN billing is notoriously hard to forecast, and a monthly bill can swing anywhere from three cents to a hundred-thousand-dollar spike the moment traffic goes viral or you get hit with an attack.
+
+He walked through AWS's answer to that unpredictability - new **fixed-price CDN and security plans** (launching November 2025) that bundle CloudFront, WAF, DDoS protection, Route 53, and CloudWatch logging into one predictable monthly price instead of a usage-based surprise. Beyond pricing, he made the case that CloudFront meaningfully improves four things at once: **cost** (compression, free data transfer from AWS origins), **security** (TLS 1.3/mTLS, Origin Shield/OAC/VPC origins to keep your origin hidden, signed URLs), **resiliency** (multi-layer caching, origin failover, graceful degradation under stress), and **performance** (HTTP/3, persistent backbone connections, compute pushed out to the edge).
 
 #### Context Is Everything
 
-- Most disappointing AI answers come from **poor context, not bad models** — AI can't infer your goal or read your mind
-- Common mistakes: dumping everything into a chat ("internet puller" problem), restating what the model already knows, and giving no goal/constraints/success criteria
-- AI usage is evolving from single **prompts** → grounded **context** → persistent **memory** (store → retrieve → generate → learn), illustrated through a “Second AI Brain” case study
-- A simple framework before asking AI anything: **Goal, relevant info, constraints, success criteria**
+Tinh Truong's talk reframed a complaint most of us have made at some point - "the AI gave me a bad answer" - by arguing that the real culprit is almost always **poor context, not a weak model**. An AI can't infer what you actually want or read your mind; it can only work with what you hand it.
+
+He listed the usual failure modes: dumping everything into a single chat message and hoping the model figures out what matters (what he called the "internet puller" problem), restating information the model already has access to, and never stating a goal, constraints, or what success even looks like. He framed the evolution of AI usage as a progression - from one-off **prompts**, to grounded **context**, to persistent **memory** (a store → retrieve → generate → learn loop) - and used a "Second AI Brain" case study to illustrate what that looks like in practice. His practical takeaway was a simple four-part checklist to run through before asking AI anything: **goal, relevant information, constraints, success criteria**.
 
 #### UTMorpho — Building a Product in 36 Hours (LotusHacks 2026)
 
-- A team retrospective on going from “head empty” at sign-up to shipping UTMorpho within a 36-hour hackathon sprint
-- Key challenges faced: AI overgeneration, token limits, and burnout close to pitch time — overcome through focused editing and better team sync
-- Takeaway: **real frustration creates real ideas**, but more ideas are not automatically better ideas — endurance and team alignment matter as much as the tech
+Team VIB closed out the day with a candid retrospective on their LotusHacks 2026 run - starting from what they described as "head empty" at sign-up and ending with a shipped product, UTMorpho, 36 hours later.
+
+They didn't sugarcoat the rough patches: AI overgenerating far more than they needed, hitting token limits at inconvenient moments, and burnout creeping in right before the pitch. What got them through was less about clever prompting and more about focused editing and tighter team communication. Their takeaway landed as much on team dynamics as on technology: **real frustration produces real ideas**, but generating more ideas isn't automatically better - endurance and staying in sync as a team matter just as much as the tech stack underneath.
 
 ### Key Takeaways
 
 #### AI Reliability Is a Design Problem, Not Just a Model Problem
 
-- Determinism settings like `temp=0` reduce but don't eliminate randomness — build systems that tolerate variance
-- Multi-agent architectures beat single agents for auditable, high-stakes, multi-domain decisions
+- Determinism settings like `temp=0` reduce randomness but don't erase it - systems need to be built to tolerate variance, not assume it away.
+- For decisions that are high-stakes, span multiple domains, or need to be auditable, multi-agent architectures consistently outperform a single overloaded agent.
 
 #### Context Engineering Is Becoming a Core Skill
 
-- Better context — not more context — drives better AI output
-- The shift from prompting to context systems to long-term memory is the next skill gap to close
+- Better context - not simply more of it - is what actually drives better AI output.
+- The shift from prompting, to context systems, to long-term memory is shaping up to be the next real skill gap developers need to close.
 
 #### Infrastructure Foundations Still Matter
 
-- CloudFront's edge capabilities (security, cost predictability, performance) are foundational even in an AI-heavy stack
-- Enterprise-grade thinking (security, governance, compliance) must be designed in from day one, not bolted on later
+- CloudFront's edge capabilities (security, predictable cost, performance) remain foundational infrastructure even in a stack that's heavily AI-driven.
+- Enterprise-grade thinking - security, governance, compliance - needs to be designed in from day one; bolting it on later doesn't work as well.
 
 ### Applying to Work
 
-- **Treat LLM output as probabilistic**: add majority-voting or structured-output constraints for any pipeline relying on `temp=0` for consistency
-- **Prototype a multi-agent pattern** for any workflow currently forced onto a single, overloaded agent
-- **Apply the four-part context framework** (goal, relevant info, constraints, success criteria) before writing prompts for real tasks
-- **Evaluate CloudFront's fixed-price plans** for any project with unpredictable traffic to avoid bill-shock scenarios
-- **Try Amazon Quick Suite** for repetitive business workflows (meeting notes, stakeholder updates, scheduling)
+- Treat LLM output as probabilistic by default - add majority-voting or structured-output constraints to any pipeline currently leaning on `temp=0` for consistency.
+- Prototype a multi-agent pattern for any workflow that's currently forced onto a single, overloaded agent.
+- Run the four-part context framework (goal, relevant information, constraints, success criteria) before writing prompts for anything that actually matters.
+- Evaluate CloudFront's fixed-price plans for any project with unpredictable traffic, to avoid a nasty bill-shock surprise later.
+- Try Amazon Quick Suite for repetitive business workflows - meeting notes, stakeholder updates, scheduling - instead of doing them by hand.
 
 ### Event Experience
 
-Attending **“FCAJ Community Day”** was a great opportunity to see how different parts of the AWS community — from enterprise engineers to hackathon builders — are applying AI and cloud fundamentals in very different, very practical ways. Key experiences included:
+Sitting in on **"FCAJ Community Day"** turned out to be a good vantage point for seeing how differently various corners of the AWS community - enterprise engineers, community builders, hackathon teams - are actually putting AI and cloud fundamentals to work in practice, rather than in theory. A few things stood out to me afterward:
 
-#### Learning from community practitioners, not just official docs
-- Speakers shared **first-hand findings**, like the LLM determinism research, rather than just marketing talking points.
-- The startup credit scoring case study showed how **multi-agent design** solves real auditability problems in regulated industries like banking.
+**Learning from practitioners instead of just official docs.** The speakers were sharing first-hand findings - like the LLM determinism research - rather than repeating marketing talking points, and the startup credit-scoring case study made it concrete how a multi-agent design solves real auditability problems in a tightly regulated industry like banking.
 
-#### Connecting infrastructure and AI concerns
-- The CloudFront session was a useful reminder that **edge and networking fundamentals** are still critical, even in an AI-centric roadmap.
-- The context engineering talk reframed prompting as a **product experience problem**, not just a wording trick.
+**Seeing infrastructure and AI concerns collide in the same conversation.** The CloudFront session was a useful reminder that edge and networking fundamentals haven't gone away just because everyone's roadmap is AI-centric now, and the context-engineering talk reframed prompting as fundamentally a product-experience problem rather than a wording trick you pick up once and reuse forever.
 
-#### Seeing the builder side of the community
-- The LotusHacks retrospective from Team VIB was a candid look at what a 36-hour build sprint actually feels like — including the failures, not just the demo.
-- It reinforced that **team sync and endurance** are as important as raw technical skill under time pressure.
+**Getting a look at the builder side of the community, warts and all.** Team VIB's LotusHacks retrospective was a genuinely honest look at what a 36-hour build sprint feels like from the inside - including the parts that didn't go well, not just the polished demo at the end. It drove home that team sync and endurance matter just as much as raw technical skill once you're under real time pressure.
 
-#### Lessons learned
-- Reliability in AI systems has to be **engineered**, not assumed from a temperature setting.
-- Good context design and good infrastructure design follow the same principle: **give the system exactly what it needs, no more, no less**.
-- Community events like this surface practical lessons that are hard to find in official documentation alone.
-
-#### Some event photos
-
-![FCAJ Community Day - Event 2 photo 1](/images/4-Event/4.2-Event2/z8012065877084_853d29ab87285253c4f9a1cad027098b.jpg)
-![FCAJ Community Day - Event 2 photo 2](/images/4-Event/4.2-Event2/z8012065879363_cb33bba29fe0bd36fe2c79e27a74c476.jpg)
-![FCAJ Community Day - Event 2 photo 3](/images/4-Event/4.2-Event2/z8012065891384_1585a7555705be56643f35d1a68f12a9.jpg)
-![FCAJ Community Day - Event 2 photo 4](/images/4-Event/4.2-Event2/z8012065902756_2881fcccc436fc5ecf8e7a300c5a8f85.jpg)
-
-> Overall, the event connected AI reliability, agentic system design, context engineering, and cloud infrastructure fundamentals into one coherent picture — and reinforced that solid engineering practices matter just as much in the AI era as they always have.
+**What I'm taking away from all of it:** reliability in AI systems has to be engineered on purpose - it's not something you get for free from a temperature setting. Good context design and good infrastructure design turn out to follow the exact same principle: give the system precisely what it needs, no more and no less. And events like this one keep surfacing practical lessons that are genuinely hard to find written down anywhere in official documentation.

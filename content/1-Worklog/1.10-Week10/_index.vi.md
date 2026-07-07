@@ -7,35 +7,23 @@ pre: " <b> 1.10. </b> "
 ---
 
 
-
 ### Mục tiêu tuần 10:
 
-* Tìm hiểu các lựa chọn hosting container với Amazon EKS.
-* Học cách tự động hoá pipeline CI/CD bằng AWS CodePipeline tích hợp với GitHub.
-* Thực hành migrate ứng dụng monolith sang kiến trúc microservices bằng Docker và Fargate.
-* Xây dựng frontend serverless tích hợp với Amazon API Gateway.
-* Bắt đầu tìm hiểu triển khai ứng dụng serverless bằng AWS Serverless Application Model (SAM).
+* Ở vai trò Phạm Văn Sỹ (CI/CD & Monitoring): xây dựng nền tảng CI/CD và Infrastructure-as-Code ban đầu cho PeriodIQ - SAM template, samconfig, controller kiểm tra health, và buildspec cho backend/frontend.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                       | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
-| --- | -------------------------------------------------------------------------------- | ------------ | --------------- | -------------- |
-| 2   | - Bắt đầu tìm hiểu Amazon EKS                                                     | 22/06/2026   | 22/06/2026      |    https://000126.awsstudygroup.com/              |
-| 3   | - Thiết lập CI/CD bằng AWS CodePipeline                                           | 23/06/2026   | 23/06/2026      |   https://000152.awsstudygroup.com/vi/              |
-| 4   | - Migrate ứng dụng monolith sang microservices bằng Docker và AWS Fargate         | 24/06/2026   | 24/06/2026      |    https://000067.awsstudygroup.com/              |
-| 5   | - Thiết lập CI/CD trên Amazon EKS bằng AWS CodePipeline và GitHub                 | 25/06/2026   | 25/06/2026      |     https://000062.awsstudygroup.com/vi/             |
-| 6   | - Serverless: xây dựng frontend gọi Amazon API Gateway                            | 26/06/2026   | 26/06/2026      |     https://000079.awsstudygroup.com/vi/             |
-| 7   | - Serverless: triển khai ứng dụng bằng AWS SAM                                    | 27/06/2026   | 27/06/2026      |       https://000080.awsstudygroup.com/vi/           |
+| Thứ | Công việc                                                                                                                     | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | -------------- |
+| 4   | - Tạo SAM template (`template.yml`) và `samconfig.toml` <br> - Xây dựng endpoint kiểm tra health `HealthController.cs` <br> - Tạo `buildspec-backend.yml` cho stage CodeBuild backend | 25/06/2026   | 25/06/2026      | https://github.com/PeriolIQ/PeriodIQ |
+| 5   | - Thêm `frontend/.env.example` <br> - Sửa lỗi cú pháp trong `buildspec-backend.yml` <br> - Tạo `buildspec-frontend.yml` (test thành công)                                            | 26/06/2026   | 26/06/2026      | https://github.com/PeriolIQ/PeriodIQ |
+| 6   | - Cập nhật `buildspec-backend.yml`: thêm test report & CodeBuild report, artifact versioning <br> - Cập nhật `buildspec-frontend.yml`: thêm bước security scan                        | 27/06/2026   | 27/06/2026      | https://github.com/PeriolIQ/PeriodIQ |
 
 
 ### Kết quả đạt được tuần 10:
 
-* Triển khai và quản lý workload container trên Amazon EKS.
-* Tự động hoá pipeline CI/CD bằng AWS CodePipeline.
-* Migrate ứng dụng monolith sang microservices bằng Docker và AWS Fargate.
-* Thiết lập CI/CD trên Amazon EKS tích hợp CodePipeline với GitHub.
-* Xây dựng frontend serverless gọi backend thông qua Amazon API Gateway.
-* Triển khai ứng dụng serverless bằng AWS Serverless Application Model (SAM).
+* Xây dựng SAM template (`template.yml`) và `samconfig.toml`, định nghĩa toàn bộ hạ tầng serverless của PeriodIQ dưới dạng Infrastructure as Code (Lambda, HTTP API, DynamoDB, S3, SQS, SNS).
+* Xây dựng endpoint health-check `HealthController`, dùng sau này cho pipeline smoke test và giám sát uptime.
+* Tạo `buildspec-backend.yml` (restore/build/test/package) và `buildspec-frontend.yml` (install/build/deploy), kiểm thử thành công từng phase build.
+* Bổ sung test report và CodeBuild report, artifact versioning cho backend build; thêm bước security scan cho frontend build.
 
-**Dịch vụ AWS đã học trong tuần:** Amazon EKS, AWS CodePipeline, Docker, AWS Fargate, Amazon API Gateway, AWS SAM.
-
-
+**Dịch vụ AWS đã học/sử dụng trong tuần:** AWS CloudFormation / AWS SAM, AWS CodeBuild, Amazon CloudWatch (health check).

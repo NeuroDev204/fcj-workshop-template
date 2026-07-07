@@ -7,37 +7,28 @@ pre: " <b> 1.2. </b> "
 ---
 
 
-
 ### Week 2 Objectives:
 
-* Get hands-on with Amazon EC2: instance metadata, user data, and Auto Scaling fundamentals.
-* Practice launching, modifying, and backing up EC2 instances (snapshots & custom AMIs).
-* Deploy a functional application on Amazon EC2 and manage access with IAM users, access keys, and roles.
-* Get introduced to cloud-based development with AWS Cloud9, and learn to set up a database with Amazon RDS.
+* Continue the AWS Study Group ("First Cloud AI Journey") curriculum: get hands-on with EC2 fundamentals, Amazon RDS, EC2 Auto Scaling, AWS Budgets, Amazon CloudWatch, and AWS Support (Lab04-Lab09).
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                                                                                                       | Start Date | Completion Date | Reference Material |
-| --- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------------- | ------------------- |
-| 2   | - Learn about User data <br> - Learn about Meta data <br> - Learn about EC2 Auto Scaling                                                                                                                                                                                                  | 27/04/2026 | 27/04/2026      |                      |
-| 3   | - Launch Microsoft Windows & Linux instances <br> - Modify an EC2 instance <br> - Create a snapshot & custom AMI <br> - Deploy the AWS User Management Application on Amazon Linux <br> - Generate an IAM user and access key <br> - Use the access key <br> - Create and use an IAM Role | 28/04/2026 | 28/04/2026      |         https://000004.awsstudygroup.com/             |
-| 4   | - Use the Cloud IDE in the browser with AWS Cloud9                                                                                                                                                                                                                                         | 29/04/2026 | 29/04/2026      |      https://000049.awsstudygroup.com/                |
-| 5   | - Create a database on Amazon Relational Database Service (Amazon RDS)                                                                                                                                                                                                                    | 30/04/2026 | 30/04/2026      |            https://000005.awsstudygroup.com/          |
-| 6   | - Automate application scaling with Amazon EC2 Auto Scaling <br> - Build a system monitor with Amazon CloudWatch                                                                                                                                                                          | 01/05/2026 | 01/05/2026      |            https://000006.awsstudygroup.com/          |
-| 7   | - Use the AWS CLI on Amazon EC2 (Windows/Ubuntu)                                                                                                                                                                                                                                           | 02/05/2026 | 02/05/2026      |        https://000011.awsstudygroup.com/              |
+| Day | Task                                                                                                                                                                                                    | Start Date | Completion Date | Reference Material |
+| --- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------------- | ------------------- |
+| 2   | - Lab04: Introduction to Amazon EC2 - launch and manage EC2 instances on Windows & Linux, deploy a Node.js user management app, work with Security Groups, EBS snapshots, custom AMIs, and IAM cost-governance policies | 27/04/2026 | 27/04/2026      | https://000004.awsstudygroup.com/ |
+| 3   | - Lab05: Get Started with Amazon RDS - set up VPC/security groups/subnet groups, launch an RDS instance (Aurora/MySQL/MariaDB/Oracle/SQL Server/PostgreSQL), configure encryption, backup/restore, and Multi-AZ | 28/04/2026 | 28/04/2026      | https://000005.awsstudygroup.com/ |
+| 4   | - Lab06: Deploy the FCJ Management Application with an Auto Scaling Group - configure EC2 Auto Scaling, Elastic Load Balancing, and Launch Templates for a scalable, fault-tolerant architecture         | 29/04/2026 | 29/04/2026      | https://000006.awsstudygroup.com/ |
+| 5   | - Lab07: Cost Management with AWS Budgets - create Cost, Usage, Reserved Instance (RI), and Savings Plans budgets                                                                                        | 30/04/2026 | 30/04/2026      | https://000007.awsstudygroup.com/ |
+| 6   | - Lab08: AWS CloudWatch Workshop - work with metrics, CloudWatch Logs Insights, Alarms, Dashboards, and Container Insights                                                                               | 01/05/2026 | 01/05/2026      | https://000008.awsstudygroup.com/ |
+| 7   | - Lab09: AWS Support Request - learn AWS Support Plans and how to create and manage a support request                                                                                                   | 02/05/2026 | 02/05/2026      | https://000009.awsstudygroup.com/ |
 
 
 ### Week 2 Achievements:
 
-* Completed a hands-on lab with Amazon EC2, covering instance metadata, user data, and Auto Scaling.
-* Practiced launching, modifying, and backing up EC2 instances using snapshots and custom AMIs.
-* Deployed a functional AWS User Management Application on Amazon Linux.
-* Generated and used an IAM access key, and practiced creating and using an IAM Role.
-* Explored the AWS Cloud9 browser-based IDE.
-* Created a database on Amazon RDS.
-* Automated infrastructure scaling with Amazon EC2 Auto Scaling.
-* Built a system monitoring dashboard using Amazon CloudWatch.
-* Practiced using the AWS CLI to manage Amazon EC2 instances on both Windows and Ubuntu.
+* Lab04 - Practiced launching and managing EC2 instances on Windows and Linux, and deployed a Node.js user management application with Security Groups, EBS snapshots, and a custom AMI.
+* Lab05 - Learned to deploy Amazon RDS databases with VPC isolation, encryption, backup/restore, and Multi-AZ high availability.
+* Lab06 - Built a scalable application architecture using EC2 Auto Scaling Groups, Elastic Load Balancing, and Launch Templates.
+* Lab07 - Learned to manage AWS costs using Cost, Usage, RI, and Savings Plans Budgets.
+* Lab08 - Practiced monitoring and observability with Amazon CloudWatch metrics, Logs Insights, Alarms, and Dashboards.
+* Lab09 - Learned about AWS Support Plans and how to create and manage a support request.
 
-**AWS services learned this week:** Amazon S3, Amazon EC2, Amazon EC2 Auto Scaling, Amazon RDS, AWS CLI, Amazon Route 53, Amazon CloudWatch, AWS Cloud9, IAM (Users, Access Keys, Roles).
-
-**Skills gained:** Using the AWS CLI; configuring, backing up, and packaging virtual servers.
+**AWS services learned this week:** Amazon EC2, Amazon VPC, Security Groups, EBS, AMI, AWS IAM, Amazon RDS, EC2 Auto Scaling, Elastic Load Balancing, AWS Budgets, Amazon CloudWatch, AWS Support.

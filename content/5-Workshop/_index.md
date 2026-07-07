@@ -5,27 +5,20 @@ weight: 5
 chapter: false
 pre: " <b> 5. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-# Secure Hybrid Access to S3 using VPC Endpoints
+# Deploying PeriodIQ Using the AWS CLI - By Team Role
 
 #### Overview
 
-**AWS PrivateLink** provides private connectivity to AWS services from VPCs and your on-premises networks, without exposing your traffic to the Public Internet.
-
-In this lab, you will learn how to create, configure, and test VPC endpoints that enable your workloads to reach AWS services without traversing the Public Internet.
-
-You will create two types of endpoints to access Amazon S3: a Gateway VPC endpoint, and an Interface VPC endpoint. These two types of VPC endpoints offer different benefits depending on if you are accessing Amazon S3 from the cloud or your on-premises location
-+ **Gateway** - Create a gateway endpoint to send traffic to Amazon S3 or DynamoDB using private IP addresses.You route traffic from your VPC to the gateway endpoint using route tables.
-+ **Interface** - Create an interface endpoint to send traffic to endpoint services that use a Network Load Balancer to distribute traffic. Traffic destined for the endpoint service is resolved using DNS.
+**PeriodIQ** is a serverless "automatic personal trainer" built by a 5-person team, each owning 3-4 AWS services (see the [Proposal](../2-proposal/)). This section is organized to mirror that same team structure - one part per person. For this report, I only document my own role in detail: **Phạm Văn Sỹ (CI/CD & Monitoring)**, covering **AWS CodePipeline, AWS CodeBuild, AWS CloudFormation/SAM, and Amazon CloudWatch** - every step done with the **AWS CLI** and verified with a real screenshot.
 
 #### Content
 
-1. [Workshop overview](5.1-Workshop-overview)
-2. [Prerequiste](5.2-Prerequiste/)
-3. [Access S3 from VPC](5.3-S3-vpc/)
-4. [Access S3 from On-premises](5.4-S3-onprem/)
-5. [VPC Endpoint Policies (Bonus)](5.5-Policy/)
-6. [Clean up](5.6-Cleanup/)
+1. [Workshop overview](5.1-Workshop-overview/)
+2. [Prerequisites](5.2-Prerequiste/)
+3. [Lê Hoài Huân - Auth & User Profile](5.3-Nguoi1-Auth/)
+4. [Trần Anh Tài - Rule Engine & Workout Generation](5.4-Nguoi2-RuleEngine/)
+5. [Lê Hữu Duy Hoàng - Progress & Async Notification](5.5-Nguoi3-Async/)
+6. [Chương Tử Luân - Admin Panel & Data](5.6-Nguoi4-Admin/)
+7. [Phạm Văn Sỹ - CI/CD & Monitoring](5.7-Nguoi5-CICD/) *(my role - documented in detail below)*
+8. [Clean up](5.8-Cleanup/)

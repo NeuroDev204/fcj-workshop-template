@@ -7,17 +7,17 @@ chapter: false
 
 # Báo cáo thực tập
 ### Thông tin sinh viên:
-&emsp; **Họ và tên:** Chương Tử Luân
+&emsp; **Họ và tên:** Phạm Văn Sỹ
 
-&emsp; **Số điện thoại:** 0938533520
+&emsp; **Số điện thoại:** 0978275054
 
-&emsp; **Email:** luanchuong51@gmail.com
+&emsp; **Email:** phamvansy204@gmail.com
 
 &emsp; **Trường:** Trường Đại học Công nghệ TP.HCM
 
 &emsp; **Ngành:** Công nghệ thông tin
 
-&emsp; **Lớp:** 22DTHC4
+&emsp; **Lớp:** 22DTHD5
 
 &emsp; **Công ty thực tập:** Công ty TNHH Amazon Web Services Viet Nam
 

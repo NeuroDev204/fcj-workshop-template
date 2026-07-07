@@ -5,104 +5,124 @@ weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
 
-Tại phần này, bạn cần tóm tắt các nội dung trong workshop mà bạn **dự tính** sẽ làm.
+# PeriodIQ - Serverless Periodization Engine
+## Hệ thống tự động sinh giáo án tập gym khoa học trên nền tảng AWS Serverless
 
-# IoT Weather Platform for Lab Research  
-## Giải pháp AWS Serverless hợp nhất cho giám sát thời tiết thời gian thực  
+### 1. Tóm tắt điều hành
+PeriodIQ là một nền tảng web serverless hoạt động như một "huấn luyện viên tự động": người tập gym nhập các chỉ số cá nhân (cân nặng, trình độ, mục tiêu tập luyện, số ngày tập/tuần khả dụng), và một Rule Engine chạy trên AWS Lambda sẽ sinh ra giáo án 4 tuần theo chu kỳ khoa học (periodization) với trọng lượng tạ cụ thể (kg) cho từng bài tập. Thay vì dùng một mẫu giáo án chung chung tìm trên mạng, người dùng nhận được giáo án phù hợp với năng lực tập luyện thực tế, có theo dõi Personal Record (PR), và tự điều chỉnh qua từng tuần — bao gồm cả tuần giảm tải (deload) tự động để giảm nguy cơ chấn thương do kiệt sức thần kinh (CNS). Hệ thống được xây dựng hoàn toàn trên các dịch vụ AWS serverless (16 dịch vụ trải trên 8 tầng kiến trúc) và được phát triển, triển khai bởi một team 5 người, mỗi người phụ trách một nhóm dịch vụ riêng.
 
-### 1. Tóm tắt điều hành  
-IoT Weather Platform được thiết kế dành cho nhóm *ITea Lab* tại TP. Hồ Chí Minh nhằm nâng cao khả năng thu thập và phân tích dữ liệu thời tiết. Nền tảng hỗ trợ tối đa 5 trạm thời tiết, có khả năng mở rộng lên 10–15 trạm, sử dụng thiết bị biên Raspberry Pi kết hợp cảm biến ESP32 để truyền dữ liệu qua MQTT. Nền tảng tận dụng các dịch vụ AWS Serverless để cung cấp giám sát thời gian thực, phân tích dự đoán và tiết kiệm chi phí, với quyền truy cập giới hạn cho 5 thành viên phòng lab thông qua Amazon Cognito.  
+### 2. Tuyên bố vấn đề
 
-### 2. Tuyên bố vấn đề  
-*Vấn đề hiện tại*  
-Các trạm thời tiết hiện tại yêu cầu thu thập dữ liệu thủ công, khó quản lý khi có nhiều trạm. Không có hệ thống tập trung cho dữ liệu hoặc phân tích thời gian thực, và các nền tảng bên thứ ba thường tốn kém và quá phức tạp.  
+**Vấn đề hiện tại**
+Phần lớn người tập gym dựa vào các mẫu giáo án tĩnh, chung chung (tìm trên mạng, trong sách, hoặc từ huấn luyện viên) mà không tính đến trình độ cá nhân, sức mạnh thực tế (1RM/PR), khả năng hồi phục, hay số ngày tập khả dụng. Việc tăng tải dần (progressive overload) hiếm khi được theo dõi có hệ thống — người tập hoặc tập quá nhẹ (không tiến bộ) hoặc tập quá nặng (xếp liên tiếp các bài tập gây kiệt sức thần kinh cao, dễ chấn thương và burnout). Tự xây dựng một giáo án theo chu kỳ và điều chỉnh từng tuần đòi hỏi kiến thức chuyên môn mà hầu hết người mới và người tập trung cấp không có, trong khi các ứng dụng/coach chuyên nghiệp thường tốn kém và phức tạp.
 
-*Giải pháp*  
-Nền tảng sử dụng AWS IoT Core để tiếp nhận dữ liệu MQTT, AWS Lambda và API Gateway để xử lý, Amazon S3 để lưu trữ (bao gồm data lake), và AWS Glue Crawlers cùng các tác vụ ETL để trích xuất, chuyển đổi, tải dữ liệu từ S3 data lake sang một S3 bucket khác để phân tích. AWS Amplify với Next.js cung cấp giao diện web, và Amazon Cognito đảm bảo quyền truy cập an toàn. Tương tự như Thingsboard và CoreIoT, người dùng có thể đăng ký thiết bị mới và quản lý kết nối, nhưng nền tảng này hoạt động ở quy mô nhỏ hơn và phục vụ mục đích sử dụng nội bộ. Các tính năng chính bao gồm bảng điều khiển thời gian thực, phân tích xu hướng và chi phí vận hành thấp.  
+**Giải pháp**
+PeriodIQ tự động hoá việc lập giáo án theo chu kỳ dựa trên khoa học thông qua Rule Engine 3 bước:
+1. **Volume Filter** — giới hạn tổng volume tập luyện mỗi tuần (số set) cho từng nhóm cơ, tránh tập quá tải một nhóm cơ.
+2. **Conflict Resolution** — tránh xếp 2 bài tập có mức kiệt sức thần kinh (CNS) cao trong cùng một ngày, phân bổ đều stress thần kinh trong tuần.
+3. **Progression Builder** — tăng tạ/số rep dần qua từng tuần dựa trên Personal Record và trình độ người dùng, và tự động chèn tuần deload (giảm volume) vào cuối chu kỳ 4 tuần.
 
-*Lợi ích và hoàn vốn đầu tư (ROI)*  
-Giải pháp tạo nền tảng cơ bản để các thành viên phòng lab phát triển một nền tảng IoT lớn hơn, đồng thời cung cấp nguồn dữ liệu cho những người nghiên cứu AI phục vụ huấn luyện mô hình hoặc phân tích. Nền tảng giảm bớt báo cáo thủ công cho từng trạm thông qua hệ thống tập trung, đơn giản hóa quản lý và bảo trì, đồng thời cải thiện độ tin cậy dữ liệu. Chi phí hàng tháng ước tính 0,66 USD (theo AWS Pricing Calculator), tổng cộng 7,92 USD cho 12 tháng. Tất cả thiết bị IoT đã được trang bị từ hệ thống trạm thời tiết hiện tại, không phát sinh chi phí phát triển thêm. Thời gian hoàn vốn 6–12 tháng nhờ tiết kiệm đáng kể thời gian thao tác thủ công.  
+Người dùng cũng ghi nhận tình trạng CNS hàng ngày (giấc ngủ, mức stress, đau cơ) và kết quả tập luyện thực tế (set/rep/kg/RPE), dữ liệu này được đưa ngược vào Rule Engine để giữ cho các giáo án sau luôn thực tế và an toàn. Admin quản lý thư viện bài tập, mẫu giáo án và tham số của các quy tắc thông qua một trang quản trị riêng.
 
-### 3. Kiến trúc giải pháp  
-Nền tảng áp dụng kiến trúc AWS Serverless để quản lý dữ liệu từ 5 trạm dựa trên Raspberry Pi, có thể mở rộng lên 15 trạm. Dữ liệu được tiếp nhận qua AWS IoT Core, lưu trữ trong S3 data lake và xử lý bởi AWS Glue Crawlers và ETL jobs để chuyển đổi và tải vào một S3 bucket khác cho mục đích phân tích. Lambda và API Gateway xử lý bổ sung, trong khi Amplify với Next.js cung cấp bảng điều khiển được bảo mật bởi Cognito.  
+**Lợi ích và giá trị mang lại**
+- Giáo án cá nhân hoá, dựa trên cơ sở khoa học mà không cần huấn luyện viên thật.
+- Tự động tăng tải và chèn tuần deload, giảm nguy cơ chấn thương do quá tải thần kinh.
+- Thông báo email/nhắc lịch bất đồng bộ giúp giữ chân người dùng mà không làm chậm luồng xử lý chính.
+- Hoàn toàn serverless (trả tiền theo mức dùng): không tốn chi phí hạ tầng nhàn rỗi, tự động scale theo lượng dùng, chi phí vận hành rất thấp với lượng người dùng nhỏ.
+- Đồng thời là một project học tập thực hành cho cả team: 5 thành viên cùng xây dựng và vận hành một phần thật của kiến trúc AWS gồm 16 dịch vụ, bao gồm cả pipeline CI/CD và triển khai production thật.
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+### 3. Kiến trúc giải pháp
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+Hệ thống được triển khai tại region AWS `ap-southeast-1`, chia thành 8 tầng: Edge (WAF + CloudFront + S3), Auth (Cognito), API (API Gateway), Core Engine (3 Lambda function), Data (DynamoDB), Async/Messaging (SQS + Lambda Worker + SNS/SES), Monitoring (CloudWatch) và CI/CD (CodePipeline + CodeBuild + CloudFormation/SAM).
 
-*Dịch vụ AWS sử dụng*  
-- *AWS IoT Core*: Tiếp nhận dữ liệu MQTT từ 5 trạm, mở rộng lên 15.  
-- *AWS Lambda*: Xử lý dữ liệu và kích hoạt Glue jobs (2 hàm).  
-- *Amazon API Gateway*: Giao tiếp với ứng dụng web.  
-- *Amazon S3*: Lưu trữ dữ liệu thô (data lake) và dữ liệu đã xử lý (2 bucket).  
-- *AWS Glue*: Crawlers lập chỉ mục dữ liệu, ETL jobs chuyển đổi và tải dữ liệu.  
-- *AWS Amplify*: Lưu trữ giao diện web Next.js.  
-- *Amazon Cognito*: Quản lý quyền truy cập cho người dùng phòng lab.  
+![Kiến trúc AWS của PeriodIQ](/images/2-Proposal/aws_architecture.png)
 
-*Thiết kế thành phần*  
-- *Thiết bị biên*: Raspberry Pi thu thập và lọc dữ liệu cảm biến, gửi tới IoT Core.  
-- *Tiếp nhận dữ liệu*: AWS IoT Core nhận tin nhắn MQTT từ thiết bị biên.  
-- *Lưu trữ dữ liệu*: Dữ liệu thô lưu trong S3 data lake; dữ liệu đã xử lý lưu ở một S3 bucket khác.  
-- *Xử lý dữ liệu*: AWS Glue Crawlers lập chỉ mục dữ liệu; ETL jobs chuyển đổi để phân tích.  
-- *Giao diện web*: AWS Amplify lưu trữ ứng dụng Next.js cho bảng điều khiển và phân tích thời gian thực.  
-- *Quản lý người dùng*: Amazon Cognito giới hạn 5 tài khoản hoạt động.  
+**Luồng xử lý chính (Tạo giáo án):**
+1. User/Admin truy cập ứng dụng (web + API) qua **CloudFront**, được bảo vệ ở tầng edge bởi **AWS WAF** (chặn bot/SQLi/XSS và giới hạn rate theo IP).
+2. CloudFront phục vụ React SPA tĩnh từ **S3**, và định tuyến `/api/*` tới **API Gateway (HTTP API)**.
+3. API Gateway xác minh JWT của request thông qua Authorizer **Cognito**.
+4. API Gateway invoke Lambda tương ứng: **API Handler** (request của user), **Rule Engine** (sinh giáo án), hoặc **Admin API** (thao tác quản trị).
+5. Rule Engine đọc profile người dùng, Personal Record, các lần check-in CNS gần nhất và các rule đang active, chạy tuần tự Volume Filter -> Conflict Resolution -> Progression Builder, rồi lưu giáo án 4 tuần vào **DynamoDB** (capacity on-demand + TTL cache).
+6. API Handler đẩy job gửi email vào **Amazon SQS** để trả response ngay cho user mà không cần chờ gửi email.
+7. **Lambda Worker**, được trigger từ SQS, gửi email giáo án / nhắc lịch tập qua **Amazon SNS/SES**.
+8. **CloudWatch** thu thập Logs, Metrics và Alarms trên tầng Core Engine và Async để giám sát hệ thống.
+9. Developer push code lên GitHub, kích hoạt **tầng CI/CD**: **CodePipeline** điều phối **CodeBuild** (build & test) và deploy hạ tầng qua **CloudFormation/SAM**.
 
-### 4. Triển khai kỹ thuật  
-*Các giai đoạn triển khai*  
-Dự án gồm 2 phần — thiết lập trạm thời tiết biên và xây dựng nền tảng thời tiết — mỗi phần trải qua 4 giai đoạn:  
-1. *Nghiên cứu và vẽ kiến trúc*: Nghiên cứu Raspberry Pi với cảm biến ESP32 và thiết kế kiến trúc AWS Serverless (1 tháng trước kỳ thực tập).  
-2. *Tính toán chi phí và kiểm tra tính khả thi*: Sử dụng AWS Pricing Calculator để ước tính và điều chỉnh (Tháng 1).  
-3. *Điều chỉnh kiến trúc để tối ưu chi phí/giải pháp*: Tinh chỉnh (ví dụ tối ưu Lambda với Next.js) để đảm bảo hiệu quả (Tháng 2).  
-4. *Phát triển, kiểm thử, triển khai*: Lập trình Raspberry Pi, AWS services với CDK/SDK và ứng dụng Next.js, sau đó kiểm thử và đưa vào vận hành (Tháng 2–3).  
+### Dịch vụ AWS sử dụng (16 dịch vụ)
+| # | Dịch vụ | Tầng | Vai trò |
+|---|---------|------|---------|
+| 1 | AWS WAF | Edge | Tường lửa ứng dụng web (WebACL, scope CLOUDFRONT) gắn vào CloudFront distribution |
+| 2 | Amazon CloudFront | Edge | CDN và định tuyến, được WAF bảo vệ |
+| 3 | Amazon S3 | Edge | Hosting React SPA (frontend tĩnh) |
+| 4 | Amazon Cognito | Auth & Security | Xác thực User/Admin, cấp JWT |
+| 5 | Amazon API Gateway (HTTP) | API | Nhận request, xác minh JWT |
+| 6 | AWS Lambda - API Handler | Core Engine | Xử lý request từ user |
+| 7 | AWS Lambda - Rule Engine | Core Engine | Sinh giáo án 4 tuần |
+| 8 | AWS Lambda - Admin API | Core Engine | Xử lý thao tác admin |
+| 9 | Amazon DynamoDB | Data | Lưu trữ + TTL cache (8 bảng, billing on-demand) |
+| 10 | Amazon SQS | Async | Hàng đợi tác vụ bất đồng bộ |
+| 11 | AWS Lambda - Worker | Async | Xử lý message từ SQS |
+| 12 | Amazon SNS / SES | Async | Gửi email và thông báo |
+| 13 | Amazon CloudWatch | Monitoring | Logs, Metrics, Alarms |
+| 14 | AWS CodePipeline | CI/CD | Điều phối pipeline triển khai |
+| 15 | AWS CodeBuild | CI/CD | Build và test mã nguồn |
+| 16 | AWS CloudFormation / SAM | CI/CD | Infrastructure as Code |
 
-*Yêu cầu kỹ thuật*  
-- *Trạm thời tiết biên*: Cảm biến (nhiệt độ, độ ẩm, lượng mưa, tốc độ gió), vi điều khiển ESP32, Raspberry Pi làm thiết bị biên. Raspberry Pi chạy Raspbian, sử dụng Docker để lọc dữ liệu và gửi 1 MB/ngày/trạm qua MQTT qua Wi-Fi.  
-- *Nền tảng thời tiết*: Kiến thức thực tế về AWS Amplify (lưu trữ Next.js), Lambda (giảm thiểu do Next.js xử lý), AWS Glue (ETL), S3 (2 bucket), IoT Core (gateway và rules), và Cognito (5 người dùng). Sử dụng AWS CDK/SDK để lập trình (ví dụ IoT Core rules tới S3). Next.js giúp giảm tải Lambda cho ứng dụng web fullstack.  
+### Thiết kế thành phần
+- **Edge & Frontend**: SPA React 19 + Vite, hosting trên S3, phục vụ qua CloudFront (dùng Origin Access Control) và được bảo vệ bởi các managed rule của AWS WAF (Common Rule Set + Bot Control) cùng rate limit theo IP.
+- **Auth**: Cognito User Pool với 2 group `Users` và `Admins`; backend .NET validate JWT từ Cognito và map claim `sub` với `UserProfile.Id`.
+- **Core Engine**: Xây dựng theo chiến lược "Monolithic Lambda" — chỉ một project ASP.NET Core Web API (`PeriodIQ.Api`) duy nhất, host qua `Amazon.Lambda.AspNetCoreServer.Hosting`, theo Clean Architecture nên logic Rule Engine và Worker nằm trong các service dùng chung ở `PeriodIQ.Core`, có thể tách thành Lambda riêng sau này mà không cần viết lại logic nghiệp vụ.
+- **Data**: 8 bảng DynamoDB (master data, hồ sơ/theo dõi người dùng, giáo án đã sinh) dùng billing `PAY_PER_REQUEST`, có GSI cho các bảng cần query phức tạp.
+- **Async/Messaging**: SQS tách các tác vụ thông báo chậm (email giáo án, nhắc lịch tập, chúc mừng PR) khỏi luồng request/response chính; Lambda Worker tiêu thụ hàng đợi và gửi qua SNS/SES.
+- **Monitoring**: CloudWatch Logs, metric filter tuỳ chỉnh (thời gian chạy Rule Engine, số giáo án được tạo, số lỗi), và Alarm cho tỷ lệ lỗi/thời gian chạy Lambda, throttling của DynamoDB, giới hạn concurrency.
+- **CI/CD**: CodePipeline (kích hoạt bởi GitHub webhook qua CodeStar Connections) chạy `buildspec-backend.yml` (restore/build/test/package qua SAM) và `buildspec-frontend.yml` (install/security scan/build/deploy lên S3 + invalidate CloudFront).
 
-### 5. Lộ trình & Mốc triển khai  
-- *Trước thực tập (Tháng 0)*: 1 tháng lên kế hoạch và đánh giá trạm cũ.  
-- *Thực tập (Tháng 1–3)*:  
-    - Tháng 1: Học AWS và nâng cấp phần cứng.  
-    - Tháng 2: Thiết kế và điều chỉnh kiến trúc.  
-    - Tháng 3: Triển khai, kiểm thử, đưa vào sử dụng.  
-- *Sau triển khai*: Nghiên cứu thêm trong vòng 1 năm.  
+### 4. Triển khai kỹ thuật
 
-### 6. Ước tính ngân sách  
-Có thể xem chi phí trên [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01)  
-Hoặc tải [tệp ước tính ngân sách](../attachments/budget_estimation.pdf).  
+**Cơ cấu team** — project được chia cho 5 thành viên, mỗi người phụ trách trọn vẹn 3-4 dịch vụ AWS (cả backend + frontend):
+- **Lê Hoài Huân - Auth & User Profile**: Amazon Cognito, AWS WAF, Amazon CloudFront.
+- **Trần Anh Tài - Rule Engine & Sinh giáo án**: AWS Lambda (API Handler + Rule Engine), Amazon S3 (hosting frontend).
+- **Lê Hữu Duy Hoàng - Tiến trình & Async Notification**: Amazon SQS, Lambda Worker, Amazon SNS/SES.
+- **Chương Tử Luân - Admin Panel & Data**: Lambda Admin API, Amazon DynamoDB, API Gateway.
+- **Phạm Văn Sỹ (vai trò của tôi) - CI/CD & Monitoring**: AWS CodePipeline, AWS CodeBuild, AWS CloudFormation/SAM, Amazon CloudWatch.
 
-*Chi phí hạ tầng*  
-- AWS Lambda: 0,00 USD/tháng (1.000 request, 512 MB lưu trữ).  
-- S3 Standard: 0,15 USD/tháng (6 GB, 2.100 request, 1 GB quét).  
-- Truyền dữ liệu: 0,02 USD/tháng (1 GB vào, 1 GB ra).  
-- AWS Amplify: 0,35 USD/tháng (256 MB, request 500 ms).  
-- Amazon API Gateway: 0,01 USD/tháng (2.000 request).  
-- AWS Glue ETL Jobs: 0,02 USD/tháng (2 DPU).  
-- AWS Glue Crawlers: 0,07 USD/tháng (1 crawler).  
-- MQTT (IoT Core): 0,08 USD/tháng (5 thiết bị, 45.000 tin nhắn).  
+**Tech Stack**
+- Backend: .NET 10 (nâng cấp từ .NET 9 giữa project), ASP.NET Core Web API, Clean Architecture (5 project), Amazon DynamoDB, Amazon SQS, Serilog, Swagger/Scalar, AWS SAM/CloudFormation.
+- Frontend: React 19, Vite 8, Tailwind CSS 4 + Mantine 9, TanStack React Query 5, Axios, React Router 7.
 
-*Tổng*: 0,7 USD/tháng, 8,40 USD/12 tháng  
-- *Phần cứng*: 265 USD một lần (Raspberry Pi 5 và cảm biến).  
+**Các giai đoạn triển khai**
+1. Thiết kế kiến trúc và phân chia vai trò trong team (các tuần lập kế hoạch).
+2. Thiết kế, review và chỉnh sửa sơ đồ kiến trúc AWS theo góp ý của team.
+3. Triển khai backend và hạ tầng (Rule Engine, controller, schema DynamoDB, thiết lập IAM).
+4. Xây dựng pipeline CI/CD (SAM template, buildspec, CodePipeline), dashboard giám sát, và triển khai production.
 
-### 7. Đánh giá rủi ro  
-*Ma trận rủi ro*  
-- Mất mạng: Ảnh hưởng trung bình, xác suất trung bình.  
-- Hỏng cảm biến: Ảnh hưởng cao, xác suất thấp.  
-- Vượt ngân sách: Ảnh hưởng trung bình, xác suất thấp.  
+### 5. Lộ trình & Mốc triển khai
+- **Tuần 1-5**: Chương trình AWS Study Group (học cá nhân, các lab AWS nền tảng).
+- **Tuần 6**: Họp khởi động team - xem xét kiến trúc, phân chia vai trò theo nhóm dịch vụ, thiết lập quyền truy cập AWS chung cho cả team (IAM Group/User/access key).
+- **Tuần 7-9**: Thiết kế và chỉnh sửa sơ đồ kiến trúc AWS theo góp ý của team; bắt đầu triển khai backend.
+- **Tuần 10**: Xây dựng nền tảng CI/CD - SAM template, `samconfig.toml`, controller kiểm tra health, buildspec cho backend/frontend.
+- **Tuần 11**: Xây dựng và ổn định pipeline CodePipeline/CodeBuild; nâng cấp backend lên .NET 10; xây dựng dashboard giám sát CI/CD.
+- **Tuần 12**: Hoàn thiện tích hợp CloudFront/Cognito/API Gateway và hoàn tất triển khai production.
 
-*Chiến lược giảm thiểu*  
-- Mạng: Lưu trữ cục bộ trên Raspberry Pi với Docker.  
-- Cảm biến: Kiểm tra định kỳ, dự phòng linh kiện.  
-- Chi phí: Cảnh báo ngân sách AWS, tối ưu dịch vụ.  
+### 6. Ước tính ngân sách
+PeriodIQ chạy trên kiến trúc serverless trả tiền theo mức dùng hoàn toàn, không tốn chi phí hạ tầng nhàn rỗi. Với quy mô triển khai nhỏ (một số ít người dùng, lượng request thấp), các yếu tố chi phí chính gồm:
+- **AWS Lambda**: tính phí theo số lần gọi + thời gian chạy; không đáng kể ở lượng traffic thấp (phần lớn nằm trong Free Tier 1 triệu request/tháng).
+- **Amazon DynamoDB**: billing `PAY_PER_REQUEST` trên 8 bảng - chi phí tỷ lệ theo số lần đọc/ghi thực tế, không phải theo capacity đặt trước.
+- **Amazon API Gateway (HTTP API)**: tính phí theo request; loại API Gateway rẻ nhất hiện có.
+- **Amazon CloudFront + S3**: chi phí tối thiểu với bundle SPA nhỏ và lượng request thấp.
+- **Amazon SQS / SNS / SES**: không đáng kể ở lượng message thấp (đều có free tier hào phóng).
+- **AWS CodePipeline / CodeBuild**: chi phí cố định nhỏ cho mỗi pipeline hoạt động cộng với số phút compute của CodeBuild mỗi lần build.
 
-*Kế hoạch dự phòng*  
-- Quay lại thu thập thủ công nếu AWS gặp sự cố.  
-- Sử dụng CloudFormation để khôi phục cấu hình liên quan đến chi phí.  
+*(Không đính kèm con số ước tính cố định từ AWS Pricing Calculator vì chi phí thực tế phụ thuộc vào lượng truy cập cuối cùng; kiến trúc được chọn có chủ đích để giữ chi phí biên gần như bằng 0 ở quy mô nhỏ.)*
 
-### 8. Kết quả kỳ vọng  
-*Cải tiến kỹ thuật*: Dữ liệu và phân tích thời gian thực thay thế quy trình thủ công. Có thể mở rộng tới 10–15 trạm.  
-*Giá trị dài hạn*: Nền tảng dữ liệu 1 năm cho nghiên cứu AI, có thể tái sử dụng cho các dự án tương lai.
+### 7. Đánh giá rủi ro
+- **Tính sai CNS/volume dẫn đến giáo án không an toàn** (ảnh hưởng trung bình, xác suất thấp) - giảm thiểu bằng rule Volume Filter và Conflict Resolution, cùng cơ chế check-in CNS hàng ngày có thể tự động kích hoạt deload.
+- **Lambda cold start / lỗi custom runtime** (ảnh hưởng trung bình, xác suất trung bình, đặc biệt sau khi nâng cấp .NET 10) - giảm thiểu bằng cách pin phiên bản SDK, sửa bootstrap assembly name cho custom runtime, và kiểm thử tự động qua pipeline CI/CD.
+- **Pipeline CI/CD bị drift** (ví dụ stack mất đồng bộ với resource đã deploy thực tế) - giảm thiểu bằng cách coi CloudFormation/SAM là nguồn chân lý duy nhất và deploy lại (xoá + deploy lại) khi phát hiện drift.
+- **Tích hợp frontend/backend bị lỗi sau khi deploy** (ví dụ sai origin path CloudFront, config Cognito cũ bị bake cứng vào bundle frontend) - giảm thiểu bằng cách lấy config Cognito/API thật từ output của CloudFormation stack ngay lúc build, thay vì hardcode.
+
+### 8. Kết quả kỳ vọng
+- Một ứng dụng serverless hoàn chỉnh, đã triển khai công khai, sinh giáo án tập luyện cá nhân hoá dựa trên khoa học - đang hoạt động tại **https://d1di1pzmfypszp.cloudfront.net/**.
+- Một kiến trúc tham chiếu và pipeline CI/CD có thể tái sử dụng cho các project serverless .NET-on-Lambda trong tương lai.
+- Kinh nghiệm thực hành end-to-end trên toàn bộ stack dịch vụ AWS (auth, API, compute, data, messaging, monitoring, CI/CD) cho cả 5 thành viên trong team.

@@ -1,19 +1,27 @@
 ---
 title : "Giới thiệu"
-date : 2024-01-01 
+date : 2024-01-01
 weight : 1
 chapter : false
 pre : " <b> 5.1. </b> "
 ---
 
-#### Giới thiệu về VPC Endpoint
+#### PeriodIQ là gì?
 
-+ Điểm cuối VPC (endpoint) là thiết bị ảo. Chúng là các thành phần VPC có thể mở rộng theo chiều ngang, dự phòng và có tính sẵn sàng cao. Chúng cho phép giao tiếp giữa tài nguyên điện toán của bạn và dịch vụ AWS mà không gây ra rủi ro về tính sẵn sàng.
-+ Tài nguyên điện toán đang chạy trong VPC có thể truy cập Amazon S3 bằng cách sử dụng điểm cuối Gateway. Interface Endpoint  PrivateLink có thể được sử dụng bởi tài nguyên chạy trong VPC hoặc tại TTDL.
+PeriodIQ là một ứng dụng serverless sinh giáo án tập gym cá nhân hoá trong 4 tuần dựa trên trình độ, cân nặng, mục tiêu tập luyện và Personal Record của người dùng, thông qua một rule engine (Volume Filter -> Conflict Resolution -> Progression Builder). Toàn bộ kiến trúc (16 dịch vụ AWS trải trên 8 tầng) được mô tả ở phần [Proposal](../../2-proposal/).
 
-#### Tổng quan về workshop
-Trong workshop này, bạn sẽ sử dụng hai VPC.
-+ **"VPC Cloud"** dành cho các tài nguyên cloud như Gateway endpoint và EC2 instance để kiểm tra.
-+ **"VPC On-Prem"** mô phỏng môi trường truyền thống như nhà máy hoặc trung tâm dữ liệu của công ty. Một EC2 Instance chạy phần mềm StrongSwan VPN đã được triển khai trong "VPC On-prem" và được cấu hình tự động để thiết lập đường hầm VPN Site-to-Site với AWS Transit Gateway. VPN này mô phỏng kết nối từ một vị trí tại TTDL (on-prem) với AWS cloud. Để giảm thiểu chi phí, chỉ một phiên bản VPN được cung cấp để hỗ trợ workshop này. Khi lập kế hoạch kết nối VPN cho production workloads của bạn, AWS khuyên bạn nên sử dụng nhiều thiết bị VPN để có tính sẵn sàng cao.
+#### Team đã chia công việc như thế nào
 
-![overview](/images/5-Workshop/5.1-Workshop-overview/diagram1.png)
+| Mục | Vai trò | Dịch vụ AWS |
+|---|---|---|
+| Lê Hoài Huân | Auth & User Profile | Amazon Cognito, AWS WAF, Amazon CloudFront |
+| Trần Anh Tài | Rule Engine & Sinh giáo án | Lambda (API Handler + Rule Engine), Amazon S3 |
+| Lê Hữu Duy Hoàng | Tiến trình & Async Notification | Amazon SQS, Lambda Worker, Amazon SNS |
+| Chương Tử Luân | Admin Panel & Data | Lambda Admin API, Amazon DynamoDB, API Gateway |
+| **Phạm Văn Sỹ (tôi)** | **CI/CD & Monitoring** | **AWS CodePipeline, AWS CodeBuild, CloudFormation/SAM, Amazon CloudWatch** |
+
+#### Phạm vi của workshop này
+
+Workshop này ghi lại chi tiết **vai trò của chính tôi, Phạm Văn Sỹ**, dùng **đúng pipeline và hạ tầng production đang chạy** - không phải bản dựng lại rút gọn. `periodiq-pipeline-dev` (định nghĩa trong `cicd-pipeline.yml`), các CodeBuild project nó chạy, stack `periodiq-dev` đã deploy bằng SAM, và hệ thống giám sát CloudWatch xung quanh chúng đều là resource đã deploy sẵn trong chính account AWS mà project này đang chạy. Mọi lệnh ở [mục 5.7](../5.7-nguoi5-cicd/) đều là lệnh `aws` CLI gọi trực tiếp trên deployment đó - đọc execution pipeline, log build, output stack, và trạng thái alarm - kèm ảnh chụp terminal làm bằng chứng cho từng bước.
+
+> **CLI Note:** vì workshop này ghi lại hệ thống production đang sống thay vì một bản sao sandbox dùng-rồi-bỏ, mọi thứ ở đây đều **chỉ đọc** - `describe-*`, `get-*`, `list-*`. Không có gì bị deploy, thay đổi, hay xoá trên hạ tầng trong lúc viết phần này (xem [Dọn dẹp tài nguyên](../5.8-cleanup/) để biết điều đó có nghĩa gì trong thực tế).

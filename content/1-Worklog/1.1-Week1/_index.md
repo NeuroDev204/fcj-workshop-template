@@ -4,42 +4,33 @@ date: 2026-07-05
 weight: 1
 chapter: false
 pre: " <b> 1.1. </b> "
---- 
+---
 
 
 ### Week 1 Objectives:
 
-* Set up and secure a personal AWS account, and understand IAM users, groups, roles, and role switching.
-* Learn how to manage and forecast AWS costs with Budgets, and understand AWS Support Plans.
-* Design and deploy a custom VPC (public/private subnets, routing, NAT, VPN) and monitor it with Flow Logs & CloudWatch.
-* Get introduced to AWS compute fundamentals: EC2 instance types, AMIs, EBS, and instance store.
-* Create and set up a personal AWS account, and explore available free credits and cost-saving resources.
+* Set up and secure a personal AWS account and claim the $200 AWS credit through the "Money-Making" tasks.
+* Learn AWS Identity and Access Management (IAM): Users, Groups, Roles, and role switching (Lab02).
+* Design and deploy a custom Amazon VPC and get introduced to EC2 fundamentals (Lab03).
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                                                                                                             | Start Date | Completion Date | Reference Material |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ------------------- |
-| 6   | - Create AWS account <br> - Complete 5 "Money-Making" tasks to earn credits <br> - Read the Credit "Killer" list <br> - Read sample architectures for the $200 credit <br> - Set up billing alerts and budgets <br> - Explore the AWS Console                                                  | 17/04/2026 | 17/04/2026      |         https://000001.awsstudygroup.com/             |
-| 2   | - Learn AWS Identity and Access Management (IAM) access control <br> - Create IAM Group & IAM User <br> - Create IAM Role & IAM User <br> - Practice switching roles                                                                                                                            | 20/04/2026 | 20/04/2026      |        https://000002.awsstudygroup.com/              |
-| 3   | - Learn AWS Cost Management with Budgets: <br>&emsp; + Create a Cost Budget <br>&emsp; + Create a Usage Budget <br>&emsp; + Create a Reserved Instance (RI) Budget <br>&emsp; + Create a Savings Plans Budget                                                                                  | 21/04/2026 | 21/04/2026      |            https://000007.awsstudygroup.com/          |
-| 4   | - Learn about AWS Support Plans <br> - Read the different Support Request types <br> - Create a Support Request <br> - Learn how to change support plans                                                                                                                                        | 22/04/2026 | 22/04/2026      |        https://000009.awsstudygroup.com/              |
-| 5   | - Learn AWS VPC: <br>&emsp; + Design and launch a custom VPC with public and private subnets <br>&emsp; + Configure Route Tables, Internet Gateway, and NAT Gateway <br>&emsp; + Set up VPC Flow Logs and CloudWatch metrics for network monitoring <br>&emsp; + Configure Site-to-Site VPN (Customer Gateway & Virtual Private Gateway) | 23/04/2026 | 23/04/2026      |          https://000003.awsstudygroup.com/            |
-| 6   | - Learn Compute (VM) on AWS: <br>&emsp; + Instance types <br>&emsp; + AMI / Backup / Key Pair <br>&emsp; + Elastic Block Store (EBS) <br>&emsp; + Instance store                                                                                                                                 | 24/04/2026 | 24/04/2026      |                      |
+| Day | Task                                                                                                                             | Start Date | Completion Date | Reference Material |
+| --- | --------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------------- | ------------------- |
+| 2   | - Register a personal AWS account <br> - Start the 5 "Money-Making" tasks to earn the $200 credit                                | 20/04/2026 | 20/04/2026      |                      |
+| 3   | - Complete the remaining "Money-Making" tasks <br> - Read the Credit "Killer" list <br> - Explore the AWS Console                | 21/04/2026 | 21/04/2026      |                      |
+| 4   | - Lab02: Learn AWS IAM - create IAM Group, IAM User, IAM Role <br> - Practice switching roles                                    | 22/04/2026 | 22/04/2026      | https://000002.awsstudygroup.com/ |
+| 5   | - Lab03 (part 1): Design and deploy a custom VPC with public/private subnets, route tables, and an Internet/NAT Gateway          | 23/04/2026 | 23/04/2026      | https://000003.awsstudygroup.com/ |
+| 6   | - Lab03 (part 2): Set up VPC Flow Logs and CloudWatch monitoring                                                                  | 24/04/2026 | 24/04/2026      | https://000003.awsstudygroup.com/ |
+| 7   | - Lab03 (part 3): Get introduced to EC2 fundamentals inside the VPC - instance types, AMIs, EBS                                  | 25/04/2026 | 25/04/2026      | https://000003.awsstudygroup.com/ |
 
 
 ### Week 1 Achievements:
 
-* Created an AWS account and completed the initial account setup: earned free credits, reviewed sample $200 architectures, set up billing alerts and a budget, and explored the AWS Console.
-* Learned AWS IAM access control and practiced creating IAM groups, users, and roles, including switching between roles.
-* Learned how to manage and forecast AWS costs using Cost, Usage, RI, and Savings Plans Budgets.
-* Learned about AWS Support Plans and how to create and manage a Support Request.
-* Designed and launched a custom VPC with public and private subnets, and configured Route Tables, an Internet Gateway, and a NAT Gateway to manage traffic flow.
-* Set up VPC Flow Logs and CloudWatch metrics for network performance monitoring.
-* Configured AWS Site-to-Site VPN components (Customer Gateway & Virtual Private Gateway) to simulate hybrid cloud connectivity.
-* Got introduced to AWS compute fundamentals: instance types, AMI/Backup/Key Pair, EBS, and instance store.
+* Registered and secured a personal AWS account; completed the "Money-Making" tasks and earned the $200 AWS credit.
+* Learned AWS IAM access control and practiced creating IAM groups, users, and roles, including switching between roles (Lab02).
+* Designed and deployed a custom VPC with public/private subnets, route tables, and an Internet/NAT Gateway, and set up VPC Flow Logs & CloudWatch monitoring (Lab03).
+* Got introduced to EC2 fundamentals within the VPC: instance types, AMIs, and EBS (Lab03).
 
-**Challenges & Solutions:**
+**AWS services learned this week:** AWS IAM (Users, Groups, Roles), Amazon VPC (Subnets, Route Tables, IGW, NAT Gateway, Flow Logs), Amazon EC2, Amazon CloudWatch.
 
-* **Challenge:** Manual misconfiguration while setting up the VPC.
-* **Solution:** Carefully audited the architecture using the VPC Resource Map.
-
-**AWS services learned this week:** Amazon S3, Amazon EC2, IAM (Users, Groups, Roles), AWS Budgets, AWS Support, Amazon VPC (Subnets, Route Tables, IGW, NAT Gateway, Flow Logs, Site-to-Site VPN), Amazon CloudWatch.
+**Skills gained:** AWS account setup and cost/credit management basics; IAM access control; VPC network design; EC2 fundamentals.

@@ -7,35 +7,25 @@ pre: " <b> 1.3. </b> "
 ---
 
 
-
 ### Week 3 Objectives:
 
-* Learn hybrid DNS integration between an on-premises network and Amazon VPC with Amazon Route 53.
-* Learn server and database migration strategies (VM Import/Export, DMS, SCT).
-* Learn to design a backup and hybrid file storage strategy with AWS Backup and Storage Gateway.
-* Get introduced to Amazon CloudFront and attend an AWS event.
+* Continue the AWS Study Group curriculum: hybrid DNS with Route 53 Resolver (Lab10), the AWS CLI (Lab11), and AWS Backup (Lab13) - Lab12 skipped.
+* Attend an AWS-organized workshop.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                     | Start Date | Completion Date | Reference Material |
-| --- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------- | --------------- | ------------------- |
-| 2   | - Set up an integrated hybrid DNS system between a local network and Amazon VPC with Amazon Route 53                                                                                                       | 04/05/2026 | 04/05/2026      |        https://000010.awsstudygroup.com/              |
-| 3   | - Migrate virtual servers with AWS VM Import/Export <br> - Perform database migration with AWS Database Migration Service (DMS) and the Schema Conversion Tool (SCT)                                      | 05/05/2026 | 05/05/2026      |         https://cloudjourney.awsstudygroup.com/2-migrate/            |
-| 4   | - Implement a system backup plan with AWS Backup                                                                                                                                                            | 06/05/2026 | 06/05/2026      |     https://000013.awsstudygroup.com/                 |
-| 5   | - Use AWS Storage Gateway (File Gateway) <br> - Learn Amazon CloudFront                                                                                                                                     | 07/05/2026 | 07/05/2026      |                      |
-| 7   | - Attend an AWS event                                                                                                                                                                                       | 09/05/2026 | 09/05/2026      |                      |
+| Day | Task                                                                                                                                                        | Start Date | Completion Date | Reference Material |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ------------------- |
+| 2   | - Lab10: Set up Hybrid DNS with Route 53 Resolver - configure Outbound/Inbound Resolver Endpoints and Resolver Rules to integrate on-premises DNS with a VPC, using CloudFormation and AWS Directory Service | 04/05/2026 | 04/05/2026      | https://000010.awsstudygroup.com/ |
+| 3   | - Lab11: Getting Started with the AWS CLI - configure the CLI with credentials/profiles and manage Amazon S3, Amazon SNS, IAM, VPC, and EC2 from the command line | 05/05/2026 | 05/05/2026      | https://000011.awsstudygroup.com/ |
+| 4   | - Lab13 (Lab12 skipped): Deploy AWS Backup to the System - create backup plans for EBS/RDS/DynamoDB/EFS, test restores, and set up SNS notifications          | 06/05/2026 | 06/05/2026      | https://000013.awsstudygroup.com/ |
+| 7   | - Attend an AWS-organized workshop                                                                                                                              | 09/05/2026 | 09/05/2026      |                      |
 
 
 ### Week 3 Achievements:
 
-* Set up a hybrid DNS integration between an on-premises network and Amazon VPC using Amazon Route 53.
-* Migrated virtual servers with AWS VM Import/Export and performed a cross-environment database migration with AWS DMS and the Schema Conversion Tool (SCT).
-* Implemented a system backup plan using AWS Backup.
-* Learned to use AWS Storage Gateway (File Gateway) for hybrid file storage, and got introduced to Amazon CloudFront for content delivery.
-* Attended an official AWS event to expand networking and practical knowledge.
+* Lab10 - Set up a hybrid DNS integration between an on-premises network and Amazon VPC using Route 53 Resolver.
+* Lab11 - Learned to use the AWS CLI to manage Amazon S3, Amazon SNS, IAM, VPC, and EC2 resources.
+* Lab13 - Implemented an AWS Backup plan with automated backups, restore testing, and SNS notifications (Lab12 was skipped).
+* Attended an AWS-organized workshop on 09/05/2026.
 
-**Challenges & Solutions:**
-
-* **Challenge:** Forgot to delete unused EBS volumes after testing the Storage Gateway lab, resulting in a small unexpected charge (~$2.1).
-* **Solution:** Deleted all the unused volumes and made a habit of cleaning up test resources right after use.
-
-**AWS services learned this week:** Amazon Route 53, AWS VM Import/Export, AWS Database Migration Service (DMS), AWS Schema Conversion Tool (SCT), AWS Backup, AWS Storage Gateway, Amazon CloudFront.
+**AWS services learned this week:** Amazon Route 53 (Resolver), AWS CloudFormation, AWS Directory Service, AWS CLI, Amazon S3, Amazon SNS, AWS IAM, Amazon VPC, Amazon EC2, AWS Backup.

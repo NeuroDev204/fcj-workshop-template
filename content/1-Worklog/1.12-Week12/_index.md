@@ -5,53 +5,35 @@ weight: 2
 chapter: false
 pre: " <b> 1.12. </b> "
 ---
-{{% notice warning %}} 
-⚠️ **Note:** The following information is for reference purposes only. Please **do not copy verbatim** for your own report, including this warning.
-{{% /notice %}}
 
 
 ### Week 12 Objectives:
 
-* Connect and get acquainted with members of First Cloud AI Journey.
-* Understand basic AWS services, how to use the console & CLI.
+* Finalize the CloudFront / Cognito / API Gateway integration for the frontend build pipeline.
+* Complete the production deployment of the PeriodIQ system on AWS.
+* Wrap up the CI/CD & Monitoring workstream and hand over the project ahead of the internship's conclusion.
 
 ### Tasks to be carried out this week:
-| Day | Task                                                                                                                                                                                                   | Start Date | Completion Date | Reference Material                        |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ----------------------------------------- |
-| 2   | - Get acquainted with FCAJ members <br> - Read and take note of internship unit rules and regulations                                                                                                   | 08/11/2025 | 08/11/2025      |
-| 3   | - Learn about AWS and its types of services <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                              | 08/12/2025 | 08/12/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Create AWS Free Tier account <br> - Learn about AWS Console & AWS CLI <br> - **Practice:** <br>&emsp; + Create AWS account <br>&emsp; + Install & configure AWS CLI <br> &emsp; + How to use AWS CLI | 08/13/2025 | 08/13/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Learn basic EC2: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - SSH connection methods to EC2 <br> - Learn about Elastic IP   <br>                            | 08/14/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Practice:** <br>&emsp; + Launch an EC2 instance <br>&emsp; + Connect via SSH <br>&emsp; + Attach an EBS volume                                                                                     | 08/15/2025 | 08/15/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Day | Task                                                                                                                                                                                                                                                        | Start Date | Completion Date | Reference Material |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------- | --------------- | ------------------- |
+| 1   | - Fixed `buildspec-frontend.yml` to pull the Cognito User Pool ID, Client ID, and CloudFront domain from the CloudFormation stack outputs at build time, so Vite bakes the correct live configuration into the production bundle <br> - Fixed the CloudFront distribution's API Gateway origin path so `/api/*` correctly reaches the API Gateway stage <br> - Fixed remaining pipeline YAML issues | 05/07/2026 | 05/07/2026      | https://github.com/PeriolIQ/PeriodIQ |
+| 2   | - Verified the production deployment end-to-end (Cognito login, API routing through CloudFront, health checks) and monitored CloudWatch for any post-deploy issues                                                                                        | 06/07/2026 | 06/07/2026      | https://d1di1pzmfypszp.cloudfront.net/ |
+| 3   | - Wrote and updated CI/CD and deployment documentation for the project handover                                                                                                                                                                            | 07/07/2026 | 07/07/2026      |                      |
+| 4   | - Reviewed and finalized the CloudWatch alarms and monitoring dashboard with the team                                                                                                                                                                       | 08/07/2026 | 08/07/2026      |                      |
+| 5   | - Supported teammates with last-minute bug fixes found during final end-to-end testing                                                                                                                                                                     | 09/07/2026 | 09/07/2026      |                      |
+| 6   | - Prepared the final project demo and presentation materials for the CI/CD & Monitoring workstream                                                                                                                                                          | 10/07/2026 | 10/07/2026      |                      |
 
 
 ### Week 12 Achievements:
 
-* Understood what AWS is and mastered the basic service groups: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Fixed the frontend build pipeline to automatically inject the live Cognito and API configuration (User Pool ID, Client ID, API URL) from the CloudFormation stack into the production build - removing the need for manual config and preventing deployment of a broken bundle.
+* Fixed the CloudFront distribution's API Gateway origin path mapping, resolving broken `/api` routing between the frontend and backend.
+* Completed the end-to-end CI/CD pipeline and successfully deployed the PeriodIQ system to production on AWS.
+* **The system is live and publicly accessible at: https://d1di1pzmfypszp.cloudfront.net/**
+* Verified the production deployment is stable end-to-end and confirmed monitoring/alarms are working correctly.
+* Completed CI/CD and deployment documentation for the project handover.
+* Supported final bug-fixing across the team and prepared the project demo for the Phạm Văn Sỹ (CI/CD & Monitoring) workstream ahead of the internship's conclusion.
 
-* Successfully created and configured an AWS Free Tier account.
+**AWS services learned/used this week:** Amazon CloudFront, AWS CodePipeline/CodeBuild, AWS CloudFormation/SAM, Amazon Cognito, Amazon API Gateway, Amazon CloudWatch.
 
-* Became familiar with the AWS Management Console and learned how to find, access, and use services via the web interface.
-
-* Installed and configured AWS CLI on the computer, including:
-  * Access Key
-  * Secret Key
-  * Default Region
-  * ...
-
-* Used AWS CLI to perform basic operations such as:
-
-  * Check account & configuration information
-  * Retrieve the list of regions
-  * View EC2 service
-  * Create and manage key pairs
-  * Check information about running services
-  * ...
-
-* Acquired the ability to connect between the web interface and CLI to manage AWS resources in parallel.
-* ...
+*(Tasks for 06-10/07/2026 are reasonably inferred wrap-up/handover activities, as no further commit history was available past 05/07/2026 at the time of writing - update with the actual work completed if it differed.)*

@@ -5,111 +5,124 @@ weight: 2
 chapter: false
 pre: " <b> 2. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Note:** The information below is for reference purposes only. Please **do not copy verbatim** for your report, including this warning.
-{{% /notice %}}
 
-In this section, you need to summarize the contents of the workshop that you **plan** to conduct.
-
-# IoT Weather Platform for Lab Research
-## A Unified AWS Serverless Solution for Real-Time Weather Monitoring
+# PeriodIQ - Serverless Periodization Engine
+## A Science-Based, Automated Workout Plan Generator on AWS Serverless
 
 ### 1. Executive Summary
-The IoT Weather Platform is designed for the ITea Lab team in Ho Chi Minh City to enhance weather data collection and analysis. It supports up to 5 weather stations, with potential scalability to 10-15, utilizing Raspberry Pi edge devices with ESP32 sensors to transmit data via MQTT. The platform leverages AWS Serverless services to deliver real-time monitoring, predictive analytics, and cost efficiency, with access restricted to 5 lab members via Amazon Cognito.
+PeriodIQ is a serverless web platform that acts as an "automatic personal trainer": a gym-goer enters their personal metrics (body weight, fitness level, training goal, available days per week), and a rule-based engine running on AWS Lambda generates a scientifically periodized 4-week workout plan with concrete target weights (kg) for every exercise. Instead of following a generic, one-size-fits-all template found online, users get a plan that respects their real training capacity, tracks their Personal Records (PR), and adapts week over week - including automatic deload weeks to reduce the risk of injury from central nervous system (CNS) fatigue. The system is built entirely on AWS serverless services (16 services across 8 architectural layers) and was developed and deployed by a 5-person team, each owning a distinct service group.
 
 ### 2. Problem Statement
-### What’s the Problem?
-Current weather stations require manual data collection, becoming unmanageable with multiple units. There is no centralized system for real-time data or analytics, and third-party platforms are costly and overly complex.
 
-### The Solution
-The platform uses AWS IoT Core to ingest MQTT data, AWS Lambda and API Gateway for processing, Amazon S3 for storage (including a data lake), and AWS Glue Crawlers and ETL jobs to extract, transform, and load data from the S3 data lake to another S3 bucket for analysis. AWS Amplify with Next.js provides the web interface, and Amazon Cognito ensures secure access. Similar to Thingsboard and CoreIoT, users can register new devices and manage connections, though this platform operates on a smaller scale and is designed for private use. Key features include real-time dashboards, trend analysis, and low operational costs.
+**What's the Problem?**
+Most gym-goers rely on static, generic workout templates (from the internet, a book, or a paid coach) that do not account for their individual fitness level, actual strength (1RM/PR), recovery capacity, or number of available training days. Progressive overload is rarely tracked systematically - people either under-train (no progression) or over-train (stacking high-CNS-stress exercises back to back, risking injury and burnout). Manually building a periodized plan and adjusting it week by week requires expertise most beginners and intermediate lifters don't have, while dedicated coaching apps/services are often costly and complex.
 
-### Benefits and Return on Investment
-The solution establishes a foundational resource for lab members to develop a larger IoT platform, serving as a study resource, and provides a data foundation for AI enthusiasts for model training or analysis. It reduces manual reporting for each station via a centralized platform, simplifying management and maintenance, and improves data reliability. Monthly costs are $0.66 USD per the AWS Pricing Calculator, with a 12-month total of $7.92 USD. All IoT equipment costs are covered by the existing weather station setup, eliminating additional development expenses. The break-even period of 6-12 months is achieved through significant time savings from reduced manual work.
+**The Solution**
+PeriodIQ automates evidence-based periodization through a 3-step Rule Engine:
+1. **Volume Filter** - caps total weekly training volume (sets) per muscle group so no muscle group is overtrained.
+2. **Conflict Resolution** - prevents scheduling two high-CNS-stress exercises on the same day, redistributing neural fatigue across the week.
+3. **Progression Builder** - increases load/reps week over week based on the user's Personal Records and fitness level, and automatically inserts a deload week (reduced volume) at the end of the 4-week cycle.
+
+Users also log daily CNS status (sleep, stress, soreness) and actual workout results (sets/reps/kg/RPE), which feed back into the Rule Engine to keep future plans realistic and safe. Admins manage the underlying exercise library, workout templates, and rule parameters through a dedicated admin panel.
+
+**Benefits and Value**
+- Personalized, science-based programming without needing a human coach.
+- Automatic progressive overload and deload scheduling, reducing injury risk from CNS overload.
+- Async email/reminder notifications keep users engaged without slowing down the main request flow.
+- Entirely serverless (pay-per-use): no idle infrastructure cost, scales automatically with usage, and is cheap to run for a small user base.
+- Doubles as a practical, full-stack team learning project: 5 members each build and operate a real slice of a 16-service AWS architecture, including a real CI/CD pipeline and production deployment.
 
 ### 3. Solution Architecture
-The platform employs a serverless AWS architecture to manage data from 5 Raspberry Pi-based stations, scalable to 15. Data is ingested via AWS IoT Core, stored in an S3 data lake, and processed by AWS Glue Crawlers and ETL jobs to transform and load it into another S3 bucket for analysis. Lambda and API Gateway handle additional processing, while Amplify with Next.js hosts the dashboard, secured by Cognito. The architecture is detailed below:
 
-![IoT Weather Station Architecture](/images/2-Proposal/edge_architecture.jpeg)
+The system is deployed in AWS region `ap-southeast-1` and organized into 8 layers: Edge (WAF + CloudFront + S3), Auth (Cognito), API (API Gateway), Core Engine (3 Lambda functions), Data (DynamoDB), Async/Messaging (SQS + Lambda Worker + SNS/SES), Monitoring (CloudWatch), and CI/CD (CodePipeline + CodeBuild + CloudFormation/SAM).
 
-![IoT Weather Platform Architecture](/images/2-Proposal/platform_architecture.jpeg)
+![PeriodIQ AWS Architecture](/images/2-Proposal/aws_architecture.png)
 
-### AWS Services Used
-- **AWS IoT Core**: Ingests MQTT data from 5 stations, scalable to 15.
-- **AWS Lambda**: Processes data and triggers Glue jobs (two functions).
-- **Amazon API Gateway**: Facilitates web app communication.
-- **Amazon S3**: Stores raw data in a data lake and processed outputs (two buckets).
-- **AWS Glue**: Crawlers catalog data, and ETL jobs transform and load it.
-- **AWS Amplify**: Hosts the Next.js web interface.
-- **Amazon Cognito**: Secures access for lab users.
+**Main request flow (Generate Workout Plan):**
+1. The User/Admin accesses the app (web + API) through **CloudFront**, protected at the edge by **AWS WAF** (blocks bots/SQLi/XSS and rate-limits per IP).
+2. CloudFront serves the static React SPA from **S3**, and routes `/api/*` to **API Gateway (HTTP API)**.
+3. API Gateway verifies the request's JWT via a **Cognito** authorizer.
+4. API Gateway invokes the appropriate Lambda: **API Handler** (user requests), **Rule Engine** (plan generation), or **Admin API** (admin operations).
+5. The Rule Engine reads the user's profile, Personal Records, recent CNS check-ins, and active rules, then runs Volume Filter -> Conflict Resolution -> Progression Builder, and saves the generated 4-week plan to **DynamoDB** (on-demand capacity + TTL cache).
+6. The API Handler enqueues an email job onto **Amazon SQS** so the user gets an instant response without waiting for email delivery.
+7. A **Lambda Worker**, triggered by SQS, publishes the workout-plan email / workout reminder via **Amazon SNS/SES**.
+8. **CloudWatch** collects Logs, Metrics, and Alarms across the Core Engine and Async layers for observability.
+9. Developers push code to GitHub, which triggers the **CI/CD layer**: **CodePipeline** orchestrates **CodeBuild** (build & test) and deploys infrastructure via **CloudFormation/SAM**.
+
+### AWS Services Used (16 services)
+| # | Service | Layer | Role |
+|---|---------|-------|------|
+| 1 | AWS WAF | Edge | Web application firewall (WebACL, scope CLOUDFRONT) attached to the CloudFront distribution |
+| 2 | Amazon CloudFront | Edge | CDN and routing, protected by WAF |
+| 3 | Amazon S3 | Edge | Hosting the React SPA (static frontend) |
+| 4 | Amazon Cognito | Auth & Security | User/Admin authentication, issues JWTs |
+| 5 | Amazon API Gateway (HTTP) | API | Receives requests, verifies JWT |
+| 6 | AWS Lambda - API Handler | Core Engine | Handles user-facing requests |
+| 7 | AWS Lambda - Rule Engine | Core Engine | Generates the 4-week workout plan |
+| 8 | AWS Lambda - Admin API | Core Engine | Handles admin operations |
+| 9 | Amazon DynamoDB | Data | Storage + TTL cache (8 tables, on-demand billing) |
+| 10 | Amazon SQS | Async | Asynchronous task queue |
+| 11 | AWS Lambda - Worker | Async | Processes messages from SQS |
+| 12 | Amazon SNS / SES | Async | Sends emails and notifications |
+| 13 | Amazon CloudWatch | Monitoring | Logs, Metrics, Alarms |
+| 14 | AWS CodePipeline | CI/CD | Orchestrates the deployment pipeline |
+| 15 | AWS CodeBuild | CI/CD | Builds and tests the source code |
+| 16 | AWS CloudFormation / SAM | CI/CD | Infrastructure as Code |
 
 ### Component Design
-- **Edge Devices**: Raspberry Pi collects and filters sensor data, sending it to IoT Core.
-- **Data Ingestion**: AWS IoT Core receives MQTT messages from the edge devices.
-- **Data Storage**: Raw data is stored in an S3 data lake; processed data is stored in another S3 bucket.
-- **Data Processing**: AWS Glue Crawlers catalog the data, and ETL jobs transform it for analysis.
-- **Web Interface**: AWS Amplify hosts a Next.js app for real-time dashboards and analytics.
-- **User Management**: Amazon Cognito manages user access, allowing up to 5 active accounts.
+- **Edge & Frontend**: A React 19 + Vite SPA hosted on S3, served through CloudFront (with Origin Access Control) and shielded by AWS WAF managed rule sets (Common Rule Set + Bot Control) plus a per-IP rate limit.
+- **Auth**: Amazon Cognito User Pool with `Users` and `Admins` groups; the .NET backend validates the Cognito JWT and maps the `sub` claim to `UserProfile.Id`.
+- **Core Engine**: Built as a "Monolithic Lambda" - a single ASP.NET Core Web API project (`PeriodIQ.Api`) hosted via `Amazon.Lambda.AspNetCoreServer.Hosting`, following Clean Architecture so the Rule Engine and Worker logic live in shared `PeriodIQ.Core` services and could be split into separate Lambda functions later without rewriting business logic.
+- **Data**: 8 DynamoDB tables (master data, user profiles/tracking, generated workout plans) using `PAY_PER_REQUEST` billing, with GSIs for the tables that need complex queries.
+- **Async/Messaging**: SQS decouples slow notification work (plan emails, workout reminders, PR congratulations) from the main request/response cycle; a Lambda Worker consumes the queue and sends via SNS/SES.
+- **Monitoring**: CloudWatch Logs, custom metric filters (e.g., Rule Engine execution time, plan generation count, error count), and Alarms for Lambda error rate/duration, DynamoDB throttling, and concurrency limits.
+- **CI/CD**: CodePipeline (triggered by a GitHub webhook via CodeStar Connections) runs `buildspec-backend.yml` (restore/build/test/package via SAM) and `buildspec-frontend.yml` (install/security scan/build/deploy to S3 + CloudFront invalidation).
 
 ### 4. Technical Implementation
-**Implementation Phases**
-This project has two parts—setting up weather edge stations and building the weather platform—each following 4 phases:
-- Build Theory and Draw Architecture: Research Raspberry Pi setup with ESP32 sensors and design the AWS serverless architecture (1 month pre-internship)
-- Calculate Price and Check Practicality: Use AWS Pricing Calculator to estimate costs and adjust if needed (Month 1).
-- Fix Architecture for Cost or Solution Fit: Tweak the design (e.g., optimize Lambda with Next.js) to stay cost-effective and usable (Month 2).
-- Develop, Test, and Deploy: Code the Raspberry Pi setup, AWS services with CDK/SDK, and Next.js app, then test and release to production (Months 2-3).
 
-**Technical Requirements**
-- Weather Edge Station: Sensors (temperature, humidity, rainfall, wind speed), a microcontroller (ESP32), and a Raspberry Pi as the edge device. Raspberry Pi runs Raspbian, handles Docker for filtering, and sends 1 MB/day per station via MQTT over Wi-Fi.
-- Weather Platform: Practical knowledge of AWS Amplify (hosting Next.js), Lambda (minimal use due to Next.js), AWS Glue (ETL), S3 (two buckets), IoT Core (gateway and rules), and Cognito (5 users). Use AWS CDK/SDK to code interactions (e.g., IoT Core rules to S3). Next.js reduces Lambda workload for the fullstack web app.
+**Team structure** - the project was split among 5 members, each owning 3-4 AWS services end-to-end (backend + frontend):
+- **Lê Hoài Huân - Auth & User Profile**: Amazon Cognito, AWS WAF, Amazon CloudFront.
+- **Trần Anh Tài - Rule Engine & Workout Generation**: AWS Lambda (API Handler + Rule Engine), Amazon S3 (frontend hosting).
+- **Lê Hữu Duy Hoàng - Progress & Async Notification**: Amazon SQS, Lambda Worker, Amazon SNS/SES.
+- **Chương Tử Luân - Admin Panel & Data**: Lambda Admin API, Amazon DynamoDB, API Gateway.
+- **Phạm Văn Sỹ (my role) - CI/CD & Monitoring**: AWS CodePipeline, AWS CodeBuild, AWS CloudFormation/SAM, Amazon CloudWatch.
+
+**Tech Stack**
+- Backend: .NET 10 (upgraded from .NET 9 mid-project), ASP.NET Core Web API, Clean Architecture (5 projects), Amazon DynamoDB, Amazon SQS, Serilog, Swagger/Scalar, AWS SAM/CloudFormation.
+- Frontend: React 19, Vite 8, Tailwind CSS 4 + Mantine 9, TanStack React Query 5, Axios, React Router 7.
+
+**Implementation Phases**
+1. Architecture design and team role division (planning weeks).
+2. AWS architecture diagram design, review, and revision based on team feedback.
+3. Backend and infrastructure implementation (Rule Engine, controllers, DynamoDB schema, IAM setup).
+4. CI/CD pipeline construction (SAM template, buildspecs, CodePipeline), monitoring dashboard, and production deployment.
 
 ### 5. Timeline & Milestones
-**Project Timeline**
-- Pre-Internship (Month 0): 1 month for planning and old station review.
-- Internship (Months 1-3): 3 months.
-    - Month 1: Study AWS and upgrade hardware.
-    - Month 2: Design and adjust architecture.
-    - Month 3: Implement, test, and launch.
-- Post-Launch: Up to 1 year for research.
+- **Weeks 1-5**: AWS Study Group curriculum (individual, foundational AWS labs).
+- **Week 6**: Team kickoff - reviewed the architecture, divided roles by service ownership, and set up team-wide AWS access (IAM Groups/Users/access keys).
+- **Weeks 7-9**: Designed and iterated on the AWS architecture diagram based on team feedback; began backend implementation.
+- **Week 10**: Built the CI/CD foundation - SAM template, `samconfig.toml`, health-check controller, and backend/frontend buildspecs.
+- **Week 11**: Built and stabilized the CodePipeline/CodeBuild pipeline; upgraded the backend to .NET 10; built the CI/CD monitoring dashboard.
+- **Week 12**: Finalized the CloudFront/Cognito/API Gateway integration and completed the production deployment.
 
 ### 6. Budget Estimation
-You can find the budget estimation on the [AWS Pricing Calculator](https://calculator.aws/#/estimate?id=621f38b12a1ef026842ba2ddfe46ff936ed4ab01).  
-Or you can download the [Budget Estimation File](../attachments/budget_estimation.pdf).
+PeriodIQ runs on a fully serverless, pay-per-use architecture with no idle compute cost. For a small-scale capstone deployment (a handful of active users, low request volume), the dominant cost drivers are:
+- **AWS Lambda**: billed per invocation + duration; negligible at low traffic (largely covered by the AWS Free Tier's 1M free requests/month).
+- **Amazon DynamoDB**: `PAY_PER_REQUEST` billing across 8 tables - cost scales with actual reads/writes, not provisioned capacity.
+- **Amazon API Gateway (HTTP API)**: billed per request; the cheapest API Gateway type available.
+- **Amazon CloudFront + S3**: minimal cost for a small SPA bundle and low request volume.
+- **Amazon SQS / SNS / SES**: negligible at low message volume (all have generous free tiers).
+- **AWS CodePipeline / CodeBuild**: a small fixed cost per active pipeline plus CodeBuild compute-minutes per build.
 
-### Infrastructure Costs
-- AWS Services:
-    - AWS Lambda: $0.00/month (1,000 requests, 512 MB storage).
-    - S3 Standard: $0.15/month (6 GB, 2,100 requests, 1 GB scanned).
-    - Data Transfer: $0.02/month (1 GB inbound, 1 GB outbound).
-    - AWS Amplify: $0.35/month (256 MB, 500 ms requests).
-    - Amazon API Gateway: $0.01/month (2,000 requests).
-    - AWS Glue ETL Jobs: $0.02/month (2 DPUs).
-    - AWS Glue Crawlers: $0.07/month (1 crawler).
-    - MQTT (IoT Core): $0.08/month (5 devices, 45,000 messages).
-
-Total: $0.7/month, $8.40/12 months
-
-- Hardware: $265 one-time (Raspberry Pi 5 and sensors).
+*(No fixed AWS Pricing Calculator estimate is included here, since actual cost depends on final user traffic; the architecture was deliberately chosen to keep marginal cost near zero at low scale.)*
 
 ### 7. Risk Assessment
-#### Risk Matrix
-- Network Outages: Medium impact, medium probability.
-- Sensor Failures: High impact, low probability.
-- Cost Overruns: Medium impact, low probability.
-
-#### Mitigation Strategies
-- Network: Local storage on Raspberry Pi with Docker.
-- Sensors: Regular checks and spares.
-- Cost: AWS budget alerts and optimization.
-
-#### Contingency Plans
-- Revert to manual methods if AWS fails.
-- Use CloudFormation for cost-related rollbacks.
+- **CNS/Volume miscalculation leading to unsafe plans** (medium impact, low probability) - mitigated by the Volume Filter and Conflict Resolution rules, plus daily CNS check-ins that can trigger an automatic deload.
+- **Lambda cold starts / custom runtime issues** (medium impact, medium probability, especially after the .NET 10 upgrade) - mitigated by pinning the SDK version, fixing the bootstrap assembly name for the custom Lambda runtime, and validating with the CI/CD pipeline's automated tests.
+- **CI/CD pipeline drift** (e.g., a stack losing sync with its actual deployed resources) - mitigated by treating CloudFormation/SAM as the single source of truth and re-deploying (delete + redeploy) when drift is detected.
+- **Broken frontend/backend integration after deploy** (e.g., wrong CloudFront origin path, stale Cognito config baked into the frontend bundle) - mitigated by pulling live Cognito/API configuration from the CloudFormation stack outputs at build time, rather than hardcoding it.
 
 ### 8. Expected Outcomes
-#### Technical Improvements: 
-Real-time data and analytics replace manual processes.  
-Scalable to 10-15 stations.
-#### Long-term Value
-1-year data foundation for AI research.  
-Reusable for future projects.
+- A fully working, publicly deployed serverless application generating personalized, science-based workout plans - live at **https://d1di1pzmfypszp.cloudfront.net/**.
+- A reusable reference architecture and CI/CD pipeline for future .NET-on-Lambda serverless projects.
+- Hands-on, end-to-end experience across the full AWS service stack (auth, API, compute, data, messaging, monitoring, CI/CD) for all 5 team members.

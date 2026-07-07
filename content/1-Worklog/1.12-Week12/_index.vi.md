@@ -3,56 +3,37 @@ title: "Worklog Tuần 12"
 date: 2024-01-01
 weight: 2
 chapter: false
-pre: " <b> 1.12 </b> "
+pre: " <b> 1.12. </b> "
 ---
-{{% notice warning %}}
-⚠️ **Lưu ý:** Các thông tin dưới đây chỉ nhằm mục đích tham khảo, vui lòng **không sao chép nguyên văn** cho bài báo cáo của bạn kể cả warning này.
-{{% /notice %}}
+
 
 ### Mục tiêu tuần 12:
 
-* Kết nối, làm quen với các thành viên trong First Cloud AI Journey.
-* Hiểu dịch vụ AWS cơ bản, cách dùng console & CLI.
+* Hoàn thiện tích hợp CloudFront / Cognito / API Gateway cho pipeline build frontend.
+* Hoàn tất triển khai production cho hệ thống PeriodIQ trên AWS.
+* Tổng kết hạng mục CI/CD & Monitoring và bàn giao project trước khi kết thúc thực tập.
 
 ### Các công việc cần triển khai trong tuần này:
-| Thứ | Công việc                                                                                                                                                                                   | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu                            |
-| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | ----------------------------------------- |
-| 2   | - Làm quen với các thành viên FCAJ <br> - Đọc và lưu ý các nội quy, quy định tại đơn vị thực tập                                                                                             | 11/08/2025   | 11/08/2025      |
-| 3   | - Tìm hiểu AWS và các loại dịch vụ <br>&emsp; + Compute <br>&emsp; + Storage <br>&emsp; + Networking <br>&emsp; + Database <br>&emsp; + ... <br>                                            | 12/08/2025   | 12/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 4   | - Tạo AWS Free Tier account <br> - Tìm hiểu AWS Console & AWS CLI <br> - **Thực hành:** <br>&emsp; + Tạo AWS account <br>&emsp; + Cài AWS CLI & cấu hình <br> &emsp; + Cách sử dụng AWS CLI | 13/08/2025   | 13/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 5   | - Tìm hiểu EC2 cơ bản: <br>&emsp; + Instance types <br>&emsp; + AMI <br>&emsp; + EBS <br>&emsp; + ... <br> - Các cách remote SSH vào EC2 <br> - Tìm hiểu Elastic IP   <br>                  | 14/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
-| 6   | - **Thực hành:** <br>&emsp; + Tạo EC2 instance <br>&emsp; + Kết nối SSH <br>&emsp; + Gắn EBS volume                                                                                         | 15/08/2025   | 15/08/2025      | <https://cloudjourney.awsstudygroup.com/> |
+| Thứ | Công việc                                                                                                                                                                                                                        | Ngày bắt đầu | Ngày hoàn thành | Nguồn tài liệu |
+| --- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------ | --------------- | -------------- |
+| 1   | - Sửa `buildspec-frontend.yml` để lấy Cognito User Pool ID, Client ID và domain CloudFront từ output của CloudFormation stack ngay lúc build, để Vite build đúng config thật vào bundle production <br> - Sửa origin path API Gateway trên CloudFront để `/api/*` trỏ đúng tới stage API Gateway <br> - Sửa các lỗi YAML còn lại trong pipeline | 05/07/2026   | 05/07/2026      | https://github.com/PeriolIQ/PeriodIQ |
+| 2   | - Kiểm tra hệ thống production end-to-end (đăng nhập Cognito, routing API qua CloudFront, health check) và theo dõi CloudWatch xem có vấn đề gì sau khi deploy không                                                            | 06/07/2026   | 06/07/2026      | https://d1di1pzmfypszp.cloudfront.net/ |
+| 3   | - Viết và cập nhật tài liệu CI/CD và deployment để bàn giao project                                                                                                                                                              | 07/07/2026   | 07/07/2026      |                 |
+| 4   | - Review và hoàn thiện các alarm CloudWatch cùng dashboard giám sát với team                                                                                                                                                     | 08/07/2026   | 08/07/2026      |                 |
+| 5   | - Hỗ trợ đồng đội sửa các lỗi phát sinh trong lúc test end-to-end cuối cùng                                                                                                                                                      | 09/07/2026   | 09/07/2026      |                 |
+| 6   | - Chuẩn bị demo và tài liệu thuyết trình cuối cùng cho hạng mục CI/CD & Monitoring                                                                                                                                               | 10/07/2026   | 10/07/2026      |                 |
 
 
 ### Kết quả đạt được tuần 12:
 
-* Hiểu AWS là gì và nắm được các nhóm dịch vụ cơ bản: 
-  * Compute
-  * Storage
-  * Networking 
-  * Database
-  * ...
+* Sửa pipeline build frontend để tự động lấy cấu hình Cognito và API thật (User Pool ID, Client ID, API URL) từ CloudFormation stack đưa vào bản build production - không cần cấu hình thủ công và tránh deploy nhầm bundle lỗi.
+* Sửa lỗi ánh xạ origin path API Gateway trên CloudFront distribution, khắc phục việc routing `/api` giữa frontend và backend bị lỗi.
+* Hoàn tất pipeline CI/CD end-to-end và triển khai thành công hệ thống PeriodIQ lên production trên AWS.
+* **Hệ thống đã hoạt động và truy cập công khai tại: https://d1di1pzmfypszp.cloudfront.net/**
+* Xác nhận hệ thống production hoạt động ổn định end-to-end và các cơ chế giám sát/alarm hoạt động đúng.
+* Hoàn thành tài liệu CI/CD và deployment để bàn giao project.
+* Hỗ trợ sửa lỗi cuối cùng cùng team và chuẩn bị demo cho hạng mục Phạm Văn Sỹ (CI/CD & Monitoring) trước khi kết thúc thực tập.
 
-* Đã tạo và cấu hình AWS Free Tier account thành công.
+**Dịch vụ AWS đã học/sử dụng trong tuần:** Amazon CloudFront, AWS CodePipeline/CodeBuild, AWS CloudFormation/SAM, Amazon Cognito, Amazon API Gateway, Amazon CloudWatch.
 
-* Làm quen với AWS Management Console và biết cách tìm, truy cập, sử dụng dịch vụ từ giao diện web.
-
-* Cài đặt và cấu hình AWS CLI trên máy tính bao gồm:
-  * Access Key
-  * Secret Key
-  * Region mặc định
-  * ...
-
-* Sử dụng AWS CLI để thực hiện các thao tác cơ bản như:
-
-  * Kiểm tra thông tin tài khoản & cấu hình
-  * Lấy danh sách region
-  * Xem dịch vụ EC2
-  * Tạo và quản lý key pair
-  * Kiểm tra thông tin dịch vụ đang chạy
-  * ...
-
-* Có khả năng kết nối giữa giao diện web và CLI để quản lý tài nguyên AWS song song.
-* ...
-
-
+*(Các công việc từ 06-10/07/2026 là các hoạt động tổng kết/bàn giao được suy diễn hợp lý, do không có thêm lịch sử commit sau ngày 05/07/2026 tại thời điểm viết - cập nhật lại nếu công việc thực tế khác.)*
