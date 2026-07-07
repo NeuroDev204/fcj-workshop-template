@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 5. </b> "
 ---
 
-# Deploying PeriodIQ Using the AWS CLI - By Team Role
+# Deploying PeriodIQ - By Team Role
 
 #### Overview
 

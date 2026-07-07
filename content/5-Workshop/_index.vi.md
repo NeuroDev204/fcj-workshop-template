@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 5. </b> "
 ---
 
-# Triển khai PeriodIQ bằng AWS CLI - Theo vai trò từng người
+# Triển khai PeriodIQ - Theo vai trò từng người
 
 #### Tổng quan
 
