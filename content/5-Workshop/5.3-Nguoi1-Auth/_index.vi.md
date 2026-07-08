@@ -13,7 +13,7 @@ Dưới đây là 3 dịch vụ AWS cốt lõi mà tôi đã thiết lập:
 | Dịch vụ AWS | Vai trò |
 |---|---|
 | **Amazon Cognito** | Quản lý User Pool, xác thực OTP qua Email, phát hành JWT và phân quyền bằng Cognito Groups (`Admin` / `Users`). |
-| **AWS WAF** | Triển khai Web ACL (chuẩn Regional) gắn trực tiếp vào Cognito để chặn Bot, chống SQL Injection, XSS và Rate Limit. |
+| **AWS WAF** | Triển khai Web ACL (chuẩn Global `CLOUDFRONT` tại `us-east-1`) gắn trực tiếp vào CloudFront để chặn Bot, chống SQL Injection, XSS và Rate Limit ngay tại Edge. |
 | **Amazon CloudFront** | Thiết lập CDN với OAC để host Frontend React trên S3 an toàn, định tuyến (route) requests `/api/*` tới API Gateway. |
 
 Ngoài các dịch vụ hạ tầng trên, tôi cũng chịu trách nhiệm toàn bộ quá trình phát triển (Development) cho luồng dữ liệu này:

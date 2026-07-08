@@ -8,11 +8,11 @@ pre : " <b> 5.3.2. </b> "
 
 To protect authentication endpoints from automated attacks or data breaches, I deployed **AWS WAF (Web Application Firewall)**.
 
-#### Architectural Change: REGIONAL Scope
+#### Edge Protection with Global Scope (CLOUDFRONT)
 
-In the original design, WAF was intended to be attached to CloudFront (requiring creation in the `us-east-1` region). However, to optimize resource management centrally in `ap-southeast-1` and to protect directly at the Authentication layer rather than the Edge layer, I changed the WAF scope to **REGIONAL**.
+Strictly adhering to the standard architecture design of the PeriodIQ project, I deployed the WAF WebACL with the **CLOUDFRONT Scope** (which must be provisioned in the `us-east-1` region).
 
-This Regional WebACL is directly attached to the **Amazon Cognito User Pool** via `AWS::WAFv2::WebACLAssociation`. This change provides higher reliability, blocking attacks aimed directly at the authentication API (e.g., Brute force, Credential stuffing) that might bypass CloudFront.
+This WebACL is attached directly to the **Amazon CloudFront Distribution** via the `WebACLId` property. This strategy creates a massive "shield" providing comprehensive system protection at the Edge layer, effectively blocking malicious traffic (DDoS, Bots, SQLi) at the perimeter before it can reach the React Frontend (S3) or the API Gateway Backend.
 
 #### Security Rule Sets
 
@@ -28,8 +28,8 @@ I configured 3 primary security rule groups:
    - Aimed at preventing localized DDoS attacks or Password Brute-forcing.
    - I set a limit of **2000 requests per 5 minutes** from the same IP address. If exceeded, subsequent requests from that IP are entirely blocked until the cycle ends.
 
-*(Illustration: WebACL Rules Configuration on AWS WAF)*
+*(WebACL Rules Configuration on AWS WAF)*
 ![WAF WebACL Rules](/images/5-Workshop/5.3-Nguoi1-Auth/03-waf-rules.png)
 
-*(Illustration: Attaching WAF to Cognito User Pool)*
-![WAF attached to Cognito](/images/5-Workshop/5.3-Nguoi1-Auth/04-waf-cognito-assoc.png)
+*(Attaching WAF to CloudFront Distribution)*
+![WAF attached to CloudFront](/images/5-Workshop/5.3-Nguoi1-Auth/04-waf-cloudfront-assoc.png)

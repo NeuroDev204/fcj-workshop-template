@@ -13,7 +13,7 @@ Below are the 3 core AWS services I have implemented:
 | AWS Service | Role |
 |---|---|
 | **Amazon Cognito** | Manage User Pool, Email OTP authentication, JWT issuance, and Role-based authorization via Cognito Groups (`Admin` / `Users`). |
-| **AWS WAF** | Deploy Regional Web ACL attached directly to Cognito to block Bots, prevent SQL Injection, XSS, and apply Rate Limiting. |
+| **AWS WAF** | Deploy Web ACL (Global scope `CLOUDFRONT` in `us-east-1`) attached directly to CloudFront to block Bots, prevent SQL Injection, XSS, and apply Rate Limiting at the Edge. |
 | **Amazon CloudFront** | Setup CDN with OAC to securely host the React Frontend on S3, and route `/api/*` requests to API Gateway. |
 
 In addition to the infrastructure services above, I am also responsible for the full Development lifecycle of this data flow:

@@ -8,11 +8,11 @@ pre : " <b> 5.3.2. </b> "
 
 Để bảo vệ các endpoints xác thực khỏi những đợt tấn công tự động hoặc rò rỉ dữ liệu, tôi đã triển khai **AWS WAF (Web Application Firewall)**.
 
-#### Thay đổi kiến trúc: REGIONAL Scope
+#### Bảo vệ biên mạng với Global Scope (CLOUDFRONT)
 
-Theo bản thiết kế ban đầu, WAF dự định được gắn vào CloudFront (yêu cầu tạo ở Region `us-east-1`). Tuy nhiên, để tối ưu hóa việc quản lý tài nguyên tập trung tại `ap-southeast-1` và bảo vệ trực tiếp vào tầng Authentication thay vì tầng Edge, tôi đã thay đổi Scope của WAF sang dạng **REGIONAL**.
+Tuân thủ chặt chẽ theo thiết kế kiến trúc chuẩn của dự án PeriodIQ, tôi đã triển khai WAF WebACL với **Scope CLOUDFRONT** (được khởi tạo bắt buộc tại Region `us-east-1`). 
 
-WebACL (chuẩn Regional) này được gắn trực tiếp vào **Amazon Cognito User Pool** thông qua `AWS::WAFv2::WebACLAssociation`. Sự thay đổi này mang lại độ tin cậy cao hơn, chặn đứng các cuộc tấn công nhắm thẳng vào API xác thực (Brute force, Credential stuffing) mà bỏ qua CloudFront.
+WebACL này được gắn trực tiếp vào **Amazon CloudFront Distribution** thông qua thuộc tính `WebACLId`. Chiến lược này tạo ra một "tấm khiên" khổng lồ bảo vệ toàn diện hệ thống ở tầng Edge, giúp chặn đứng các luồng truy cập độc hại (DDoS, Bot, SQLi) ngay từ vòng ngoài trước khi chúng có cơ hội chạm tới giao diện React (S3) hay hệ thống API Gateway Backend.
 
 #### Các lớp quy tắc bảo vệ (Rules)
 
@@ -31,5 +31,5 @@ Tôi đã thiết lập 3 nhóm quy tắc bảo mật chính yếu:
 *(Cấu hình WebACL trên AWS WAF)*
 ![WAF WebACL Rules](/images/5-Workshop/5.3-Nguoi1-Auth/03-waf-rules.png)
 
-*(Gắn WAF vào Cognito User Pool)*
-![WAF attached to Cognito](/images/5-Workshop/5.3-Nguoi1-Auth/04-waf-cognito-assoc.png)
+*(Gắn WAF vào CloudFront Distribution)*
+![WAF attached to CloudFront](/images/5-Workshop/5.3-Nguoi1-Auth/04-waf-cloudfront-assoc.png)
