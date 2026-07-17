@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 6. </b> "
 ---
 
-During my internship at **Amazon Web Services Viet Nam Company Limited** (the **Workforce Bootcamp - First Cloud AI Journey** program) from **April 20, 2026** to **July 12, 2026**, I had the opportunity to learn, practice, and apply the knowledge acquired in school to a real-world working environment.  
+During my internship at **Amazon Web Services Viet Nam Company Limited** (the **Workforce Bootcamp - First Cloud AI Journey** program) from **April 17, 2026** to **July 30, 2026**, I had the opportunity to learn, practice, and apply the knowledge acquired in school to a real-world working environment.  
 I participated in building **PeriodIQ - a serverless platform that automatically generates science-based gym training programs on AWS**, taking on the **CI/CD & Monitoring** role (AWS CodePipeline, CodeBuild, CloudFormation/SAM, CloudWatch), through which I improved my skills in **programming (.NET, AWS Lambda/SAM), building and operating CI/CD pipelines, system monitoring, architecture analysis and technical report writing, as well as communication and teamwork**.  
 
 In terms of work ethic, I always strived to complete tasks well, complied with workplace regulations, and actively engaged with colleagues to improve work efficiency.

@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 6. </b> "
 ---
 
-Trong suốt thời gian thực tập tại **Công ty TNHH Amazon Web Services Việt Nam** (chương trình **Workforce Bootcamp - First Cloud AI Journey**) từ **20/04/2026** đến **12/07/2026**, tôi đã có cơ hội học hỏi, rèn luyện và áp dụng kiến thức đã được trang bị tại trường vào môi trường làm việc thực tế.  
+Trong suốt thời gian thực tập tại **Công ty TNHH Amazon Web Services Việt Nam** (chương trình **Workforce Bootcamp - First Cloud AI Journey**) từ **17/04/2026** đến **30/07/2026**, tôi đã có cơ hội học hỏi, rèn luyện và áp dụng kiến thức đã được trang bị tại trường vào môi trường làm việc thực tế.  
 Tôi đã tham gia xây dựng **PeriodIQ - nền tảng serverless tự động sinh giáo án tập gym khoa học trên AWS**, đảm nhận vai trò **CI/CD & Monitoring** (AWS CodePipeline, CodeBuild, CloudFormation/SAM, CloudWatch), qua đó cải thiện kỹ năng **lập trình (.NET, AWS Lambda/SAM), xây dựng và vận hành pipeline CI/CD, giám sát hệ thống, phân tích kiến trúc và viết báo cáo kỹ thuật, cùng khả năng giao tiếp, phối hợp làm việc nhóm**.  
 
 Về tác phong, tôi luôn cố gắng hoàn thành tốt nhiệm vụ, tuân thủ nội quy, và tích cực trao đổi với đồng nghiệp để nâng cao hiệu quả công việc.

@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 1. </b> "
 ---
 
-This worklog covers my entire internship at the **Workforce Bootcamp - First Cloud AI Journey** program run by AWS Vietnam, spanning **12 weeks** (April 20, 2026 to July 12, 2026, about 3 months). The first 5 weeks were a self-paced AWS Study Group phase covering foundational services; the remaining 7 weeks were spent building the capstone project **PeriodIQ** with a 5-person team, where I owned the **CI/CD & Monitoring** track (AWS CodePipeline, CodeBuild, CloudFormation/SAM, CloudWatch).
+This worklog covers my entire internship at the **Workforce Bootcamp - First Cloud AI Journey** program run by AWS Vietnam, spanning **15 weeks** (April 17, 2026 to July 30, 2026, about 3.5 months). The first 5 weeks were a self-paced AWS Study Group phase covering foundational services; the remaining 7 weeks were spent building the capstone project **PeriodIQ** with a 5-person team, where I owned the **CI/CD & Monitoring** track (AWS CodePipeline, CodeBuild, CloudFormation/SAM, CloudWatch).
 
 **Week 1:** [Getting familiar with AWS: IAM, VPC, EC2](1.1-week1/)
 

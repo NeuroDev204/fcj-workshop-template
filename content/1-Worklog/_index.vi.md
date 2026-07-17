@@ -6,7 +6,7 @@ chapter: false
 pre: " <b> 1. </b> "
 ---
 
-Worklog dưới đây ghi lại toàn bộ quá trình thực tập của mình tại chương trình **Workforce Bootcamp - First Cloud AI Journey** của AWS Việt Nam, kéo dài **12 tuần** (từ 20/04/2026 đến 12/07/2026, khoảng 3 tháng). 5 tuần đầu là giai đoạn tự học theo chương trình AWS Study Group với các dịch vụ nền tảng; 7 tuần còn lại là giai đoạn cùng team 5 người xây dựng project cuối kỳ **PeriodIQ**, trong đó mình phụ trách hạng mục **CI/CD & Monitoring** (AWS CodePipeline, CodeBuild, CloudFormation/SAM, CloudWatch).
+Worklog dưới đây ghi lại toàn bộ quá trình thực tập của mình tại chương trình **Workforce Bootcamp - First Cloud AI Journey** của AWS Việt Nam, kéo dài **15 tuần** (từ 17/04/2026 đến 30/07/2026, khoảng 3.5 tháng). 5 tuần đầu là giai đoạn tự học theo chương trình AWS Study Group với các dịch vụ nền tảng; 7 tuần còn lại là giai đoạn cùng team 5 người xây dựng project cuối kỳ **PeriodIQ**, trong đó mình phụ trách hạng mục **CI/CD & Monitoring** (AWS CodePipeline, CodeBuild, CloudFormation/SAM, CloudWatch).
 
 **Tuần 1:** [Làm quen với AWS và các dịch vụ cơ bản: IAM, VPC, EC2](1.1-week1/)
 
