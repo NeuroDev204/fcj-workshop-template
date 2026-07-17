@@ -12,6 +12,10 @@ pre: " <b> 5. </b> "
 
 **PeriodIQ** is a serverless "automatic personal trainer" built by a 5-person team, each owning 3-4 AWS services (see the [Proposal](../2-proposal/)). This section is organized to mirror that same team structure - one part per person. For this report, I only document my own role in detail: **Phạm Văn Sỹ (CI/CD & Monitoring)**, covering **AWS CodePipeline, AWS CodeBuild, AWS CloudFormation/SAM, and Amazon CloudWatch** - every step done with the **AWS CLI** and verified with a real screenshot.
 
+#### Production Link
+
+* **Live Application:** [https://d1di1pzmfypszp.cloudfront.net/](https://d1di1pzmfypszp.cloudfront.net/)
+
 #### Content
 
 1. [Workshop overview](5.1-Workshop-overview/)

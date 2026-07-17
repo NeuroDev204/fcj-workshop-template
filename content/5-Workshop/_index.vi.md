@@ -12,6 +12,10 @@ pre: " <b> 5. </b> "
 
 **PeriodIQ** là một "huấn luyện viên tự động" serverless do một team 5 người xây dựng, mỗi người phụ trách 3-4 dịch vụ AWS (xem [Proposal](../2-proposal/)). Phần này được tổ chức theo đúng cơ cấu team đó - mỗi mục ứng với một người. Trong báo cáo này, tôi chỉ ghi chi tiết vai trò của mình: **Phạm Văn Sỹ (CI/CD & Monitoring)**, gồm **AWS CodePipeline, AWS CodeBuild, AWS CloudFormation/SAM, và Amazon CloudWatch** - mọi bước đều làm bằng **AWS CLI** và có ảnh chụp màn hình thật minh hoạ.
 
+#### Link Production
+
+* **Đường dẫn ứng dụng:** [https://d1di1pzmfypszp.cloudfront.net/](https://d1di1pzmfypszp.cloudfront.net/)
+
 #### Nội dung
 
 1. [Tổng quan về workshop](5.1-Workshop-overview/)
